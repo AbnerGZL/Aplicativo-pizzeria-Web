@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Pizza</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<!--Navbar-->
+    <div th:replace="fragments/f-Home::navbar"></div>
+
+<!--Contenido principal-->
+    <main>
+        <header class="banner divisor-header">
+            <img th:src="@{/images/pizza.jpg}" alt="Logo" width="100%">
+            <div class="banner_content text-light">
+                <div class="grid w-100 px-3 text-center">
+                    <div class="d-flex align-items-center col-md-5 col-xl-5 col-lg-5 col-sm-6 col-6 justify-content-evenly">
+                        <h1 class="p-2 cursor-null mx-4">Un lugar cálido para probar cosas nuevas con sabor al hogar</h1>
+                    </div>
+                    <div class="d-flex align-items-center my-3 col-md-5 col-xl-5 col-lg-5 col-sm-6 col-6 justify-content-evenly flex-wrap">
+                        <div class="d-flex mx-md-4 mx-lg-4 mx-xl-1 mx-sm-4 mx-4 my-3">
+                            <a class="font-fredoka size-14 fw-semibold py-3 px-4 rounded-4 banner-button-1 text-pizza-red" href="#">Ver Ofertas</a>
+                            <a class="font-fredoka size-14 fw-semibold p-3 rounded-4 banner-button-outline-1" href="#">Ver Ofertas</a>
+                        </div>
+                        <div class="d-flex mx-md-4 mx-lg-4 mx-xl-1 mx-sm-4 mx-4 my-3">
+                            <a class="font-fredoka size-14 fw-semibold py-3 px-4 rounded-4 banner-button-2 text-pizza-dark" href="#locate">Ingresar ubicación</a>
+                            <a class="font-fredoka size-14 fw-semibold p-3 rounded-4 banner-button-outline-2" href="#">Ingresar ubicació</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="d-flex w-100 banner-footer text-light">
+            <span class="line"></span>
+            <span class="w-100 mx-auto text-center px-2">¡Delivery gratis en pedidos mayores a s/20!</span>
+            <span class="line"></span>
+        </div>
+        <section>
+            <div class="d-flex p-5">
+                <div class="col-6 photo">
+                    <img th:src="@{/images/eat-photo.jpg}">
+                </div>
+                <div class="col-6 locate-input p-4">
+                    <div class="text-light">
+                        <h2>Bienvenido a Happy Pizza</h2>
+                    </div>
+                    <div class="d-flex col-12">
+                        <div class="d-flex col-8 flex-wrap">
+                            <div class="text-light col-12 my-2 font-roboto">
+                                Ingrese su dirección para poder personalizar y consultar la disponibilidad de su pedido
+                            </div>
+                            <div class="d-flex col-12">
+                                <form action="" method="POST" class="w-100">
+                                    <div class="d-flex w-100 align-items-center bg-pizza-dark rounded-3">
+                                        <label for="locate" class="px-2">
+                                            <img th:src="@{/images/geo.svg}" width="25px">
+                                        </label>
+                                        <input type="text" name="locate" id="locate" class="form-control font-fredoka fw-semibold" placeholder="Ingresa tu ubicación">
+                                    </div>
+                                    <a href="#" type="submit" class="w-100 btn-pizza-yellow fw-semibold font-fredoka mt-3">Ver menú</a>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center col-4">
+                            <img th:src="@{/images/pizza_png.png}" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="row justify-content-evenly mb-4">
+                <div class="col-5 col-md-2 text-center p-0">
+                    <div class="tipo mb-2">
+                        <img src="img/pan.svg" class="icono-tipo">
+                        <span class="icon-text">Ofertas</span>
+                    </div>
+                </div>
+                <div class="col-5 col-md-2 text-center p-0">
+                    <div class="tipo mb-2">
+                        <img src="img/pizza.svg" class="icono-tipo">
+                        <span class="icon-text">Combos</span>
+                    </div>
+                </div>
+                <div class="col-5 col-md-2 text-center p-0">
+                    <div class="tipo mb-2">
+                        <img src="img/gaseosa.svg" class="icono-tipo">
+                        <span class="icon-text">Bebidas</span>
+                    </div>
+                </div>
+                <div class="col-5 col-md-2 text-center p-0">
+                    <div class="tipo mb-2">
+                        <img src="img/pan.svg" class="icono-tipo">
+                        <span class="icon-text">Antojitos</span>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row justify-content-evenly">
+                <div class="col-5 col-md-2 text-center p-0">
+                    <div class="tipo mb-2">
+                        <img src="img/brazo.svg" class="icono-tipo">
+                        <span class="icon-text">Imbatibles</span>
+                    </div>
+                </div>
+                <div class="col-5 col-md-2 text-center p-0">
+                    <div class="tipo mb-2">
+                        <img src="img/cara.svg" class="icono-tipo">
+                        <span class="icon-text">Para mi</span>
+                    </div>
+                </div>
+                <div class="col-5 col-md-2 text-center p-0">
+                    <div class="tipo mb-2">
+                        <img src="img/pizza.svg" class="icono-tipo">
+                        <span class="icon-text">Pizzas</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<!--Footer-->
+    <div th:replace="fragments/f-Home::footer"></div>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
