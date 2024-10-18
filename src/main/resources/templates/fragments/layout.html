@@ -1,0 +1,164 @@
+<nav th:fragment="navbar" class="d-flex shadow-sm p-2 align-items-center">
+    <div class="d-flex align-items-center justify-content-center col-6">
+        <a th:href="@{/}" class="d-flex p-2 text-pizza-dark rounded-3 gap-1 font-fugaz-one">
+            <img src="">
+            HappyPizza
+        </a>
+    </div>
+    <div class="d-flex align-items-center justify-content-center col-6 ">
+        <a href="#" class="d-flex px-3 py-1 bg-pizza-yellow text-pizza-dark rounded-3 gap-1">
+            <img src="/images/call.svg">
+            <div id="contactus" class="grid">
+                <h6>Contáctanos</h6>
+                <h6>XXX-XXX-XXX</h6>
+            </div>
+        </a>
+        <a href="#" class="d-flex px-3 py-2 gap-2 text-pizza-dark rounded-3">
+            <img src="/images/user.svg">
+            <div id="login">
+                Iniciar Sesión
+            </div>
+        </a>
+    </div>
+</nav>
+
+
+
+
+<header id="header-categories" class="px-1" th:fragment="header-categories">
+    <div class="d-flex w-100 align-items-center bg-pizza-yellow rounded-3 shadow-sm">
+        <div class="d-flex p-2 col-10 justify-content-start align-items-center sections-bar size-14 font-fredoka fw-semibold">
+            <a th:href="@{/oferts}" class="font-fredoka d-flex justify-content-center align-items-center btn-effect-dark">
+                <div class="container-fluid d-flex align-items-center justify-content-center col-6">
+                    <img th:src="@{/images/coin.svg}" class="img-fluid" width="35px">
+                </div>
+                <div class="text-start w-100">
+                    Ofertas
+                </div>
+            </a>
+            <a th:href="@{/combos}" class="font-fredoka d-flex justify-content-center align-items-center btn-effect-dark">
+                <div class="container-fluid d-flex align-items-center justify-content-center col-5">
+                    <img th:src="@{/images/combo.svg}" class="img-fluid" width="25px">
+                </div>
+                <div class="text-start w-100">
+                    Combos
+                </div>
+            </a>
+            <a th:href="@{/drinks}" class="font-fredoka d-flex justify-content-center align-items-center btn-effect-dark">
+                <div class="container-fluid d-flex align-items-center justify-content-center col-5">
+                    <img th:src="@{/images/bebida.svg}" width="15px">
+                </div>
+                <div class="text-start w-100">
+                    Bebidas
+                </div>
+            </a>
+            <a th:href="@{/snacks}" class="font-fredoka d-flex justify-content-center align-items-center btn-effect-dark">
+                <div class="container-fluid d-flex align-items-center justify-content-center col-5">
+                    <img th:src="@{/images/bread.svg}" width="25px">
+                </div>
+                <div class="text-start w-100">
+                    Antojitos
+                </div>
+            </a>
+            <a th:href="@{/unbeatables}" class="font-fredoka d-flex justify-content-center align-items-center btn-effect-dark">
+                <div class="container-fluid d-flex align-items-center justify-content-center col-5">
+                    <img th:src="@{/images/bicep.svg}" class="img-fluid" width="25px">
+                </div>
+                <div class="text-start w-100">
+                    Imbatibles
+                </div>
+            </a>
+            <a th:href="@{/single}" class="font-fredoka d-flex justify-content-center align-items-center btn-effect-dark">
+                <div class="container-fluid d-flex align-items-center justify-content-center col-5">
+                    <img th:src="@{/images/happy-face.svg}" class="img-fluid" width="35px">
+                </div>
+                <div class="text-center w-100">
+                    Para mí
+                </div>
+            </a>
+            <a th:href="@{/pizzas}" class="font-fredoka d-flex justify-content-center align-items-center btn-effect-dark">
+                <div class="container-fluid d-flex align-items-center justify-content-center col-6">
+                    <img th:src="@{/images/pizza.svg}" class="img-fluid" width="25px">
+                </div>
+                <div class="text-start w-100">
+                    Pizzas
+                </div>
+            </a>
+        </div>
+        <div class="d-flex p-2 w-100 justify-content-end align-items-center car-button">
+            <a th:href="@{/car}" class="font-fredoka d-flex justify-content-evenly align-items-center btn-effect-dark">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+    <div></div>
+</header>
+
+
+
+<footer th:fragment="footer" class="d-flex justify-content-evenly bg-pizza-dark text-light p-3 flex-wrap">
+    <div class="p-3 d-block align-items-baseline">
+        <h5>Servicio y ayuda</h5>
+        <ul>
+            <li>
+                <a href="#">Iniciar sesión</a>
+            </li>
+            <li>
+                <a href="#">Enviar un correo</a>
+            </li>
+            <li>
+                <a href="#">Preguntas frecuentes</a>
+            </li>
+            <li>
+                <a href="#">Trabaja en nuestros locales</a>
+            </li>
+            <li>
+                <a href="#">Libro de reclamaciones</a>
+            </li>
+        </ul>
+    </div>
+    <div class="p-3 d-block align-items-baseline">
+        <h5>Políticas de servicio</h5>
+        <ul>
+            <li>
+                <a href="#">Términos y condiciones</a>
+            </li>
+            <li>
+                <a href="#">Política de privacidad</a>
+            </li>
+            <li>
+                <a href="#">Carta del día</a>
+            </li>
+        </ul>
+    </div>
+    <div class="p-3 d-block align-items-baseline">
+        <h5>Sobre nosotros</h5>
+        <ul>
+            <li>
+                <a href="#">Nuestra historia</a>
+            </li>
+            <li>
+                <a href="#">Nuestros locales</a>
+            </li>
+            <li>
+                <a href="#">Ficha nutricional</a>
+            </li>
+            <li>
+                <a href="#">Permisos de operación</a>
+            </li>
+        </ul>
+    </div>
+    <div class="px-5 py-3 d-block text-center align-items-baseline border-start border-light border-2">
+        <h5>Redes sociales</h5>
+        <ul class="p-3">
+            <li>
+                <a href="#">Facebook</a>
+            </li>
+            <li>
+                <a href="#">Instagram</a>
+            </li>
+        </ul>
+    </div>
+</footer>
