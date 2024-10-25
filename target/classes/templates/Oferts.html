@@ -7,8 +7,16 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
+<!--Pantalla de carga-->
+<div th:replace="fragments/layout::pageloader"></div>
+
+    <!-- Navbar -->
     <div th:replace="fragments/layout::navbar"></div>
+    
+    <!-- Header -->
     <div th:replace="fragments/layout::header-categories"></div>
+
+    <!-- Contenido principal -->
     <main>
         <div class="submain">
             <section class="container-fluid" id="oferts">
@@ -39,8 +47,10 @@
             </section>
         </div>
     </main>
-
+    
+    <!-- Footer -->
     <div th:replace="fragments/layout::footer"></div>
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/script.js}"></script>
 </body>
 </html>

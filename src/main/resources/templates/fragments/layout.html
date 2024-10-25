@@ -1,3 +1,17 @@
+<!-- Pantalla de carga -->
+<div id="loader" th:fragment="pageloader">
+    <div class="pizza">
+        <div class="pepperoni1"></div>
+        <div class="pepperoni2"></div>
+        <div class="pepperoni3"></div>
+        <div class="pepperoni4"></div>
+        <div class="pepperoni5"></div>
+    </div>
+    <p class="mt-2">Cargando...</p>
+</div>
+
+
+<!--Navbar--->
 <nav th:fragment="navbar" class="d-flex shadow-sm p-2 align-items-center">
     <div class="d-flex align-items-center justify-content-center col-6">
         <a th:href="@{/}" class="d-flex p-2 text-pizza-dark rounded-3 gap-1 font-fugaz-one">
@@ -6,25 +20,31 @@
         </a>
     </div>
     <div class="d-flex align-items-center justify-content-center col-6 ">
-        <a href="#" class="d-flex px-3 py-1 bg-pizza-yellow text-pizza-dark rounded-3 gap-1">
-            <img src="/images/call.svg">
+        <a href="tel:+51999999999" class="d-flex px-3 py-1 bg-pizza-yellow text-pizza-dark rounded-3 gap-1 btn-pizza-yellow mx-1">
+            <img src="/images/call.svg" class="img-fluid" width="45px">
             <div id="contactus" class="grid">
                 <h6>Contáctanos</h6>
-                <h6>XXX-XXX-XXX</h6>
+                <h6>999-999-999</h6>
             </div>
         </a>
-        <a href="#" class="d-flex px-3 py-2 gap-2 text-pizza-dark rounded-3">
+        <a th:href="@{/user}" class="d-flex px-3 py-2 gap-2 text-pizza-dark rounded-3 mx-1">
             <img src="/images/user.svg">
-            <div id="login">
+            <div id="login" th:text="${username != null ? username : 'Iniciar Sesión'}">
                 Iniciar Sesión
             </div>
         </a>
+<!--        <a th:href="@{/user}" class="d-flex px-3 py-2 gap-2 text-pizza-dark rounded-3 mx-1">-->
+<!--            <img src="/images/user.svg">-->
+<!--            <div id="login">-->
+<!--                Iniciar Sesión-->
+<!--            </div>-->
+<!--        </a>-->
     </div>
 </nav>
 
 
 
-
+<!--Header de categorías-->
 <header id="header-categories" class="px-1" th:fragment="header-categories">
     <div class="d-flex w-100 align-items-center bg-pizza-yellow rounded-3 shadow-sm">
         <div class="d-flex p-2 col-10 justify-content-start align-items-center sections-bar size-14 font-fredoka fw-semibold">
@@ -97,7 +117,7 @@
 </header>
 
 
-
+<!--Footerde página-->
 <footer th:fragment="footer" class="d-flex justify-content-evenly bg-pizza-dark text-light p-3 flex-wrap">
     <div class="p-3 d-block align-items-baseline">
         <h5>Servicio y ayuda</h5>
@@ -162,3 +182,26 @@
         </ul>
     </div>
 </footer>
+
+<!--Section bar de usuario-->
+<div  th:fragment="section-bar" class="d-flex justify-content-center mx-auto my-3">
+    <div class="grid mx-2 p-3">
+        <h4 class="text-center">Mi cuenta</h4>
+        <div class="grid size-14 fw-semibold">
+            <a href="#" class="bg-pizza-gray btn-effect-dark py-3 px-5 rounded-3 m-2">
+                Ver detalles
+            </a>
+            <a href="#" class="bg-pizza-gray btn-effect-dark py-3 px-5 rounded-3 m-2">
+                Ver historial
+            </a>
+            <a href="#" class="bg-pizza-gray btn-effect-dark py-3 px-5 rounded-3 m-2">
+                Envíos
+            </a>
+            <a href="#" class="bg-pizza-gray btn-effect-dark py-3 px-5 rounded-3 m-2">
+                Devoluciones
+            </a>
+            <a th:href="@{/logout}" class="btn btn-danger px-5 rounded-3 m-2">
+                Cerrar sesión
+            </a>
+        </div>
+    </div>

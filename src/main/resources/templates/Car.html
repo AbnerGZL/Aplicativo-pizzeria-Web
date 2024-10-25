@@ -7,6 +7,9 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
+    <!--Pantalla de carga-->
+    <div th:replace="fragments/layout::pageloader"></div>
+
     <div th:replace="fragments/layout::navbar"></div>
     <div th:replace="fragments/layout::header-categories"></div>
     <main>
@@ -51,6 +54,7 @@
     </main>
 
     <div th:replace="fragments/layout::footer"></div>
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/script.js}"></script>
 </body>
 </html>

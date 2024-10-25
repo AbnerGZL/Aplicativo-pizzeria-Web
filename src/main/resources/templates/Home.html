@@ -7,6 +7,8 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
+<!--Pantalla de carga-->
+    <div th:replace="fragments/layout::pageloader"></div>
 <!--Navbar-->
     <div th:replace="fragments/layout::navbar"></div>
 
@@ -41,10 +43,10 @@
         <div class="submain">
             <section id="location">
                 <div class="d-flex px-3 py-2 flex-wrap align-items-center section-1">
-                    <div class="photo mb-4 col-12 col-md-12 col-lg-6 col-xl-6 mx-auto">
+                    <div class="photo mb-4 col-12 col-md-12 col-lg-5 col-xl-6 mx-auto">
                         <img th:src="@{/images/eat.png}" class="img-fluid">
                     </div>
-                    <div class="d-flex align-items-center p-4 col-12 col-md-12 col-lg-6 col-xl-6 mx-auto locate-input">
+                    <div class="d-flex align-items-center p-4 col-12 col-md-12 col-lg-7 col-xl-6 mx-auto locate-input">
                         <div class="grid col-8 align-content-center">
                             <div class="text-light">
                                 <h2>Bienvenido a Happy Pizza</h2>
@@ -56,9 +58,9 @@
                                 <div class="d-flex col-12">
                                     <form action="" method="POST" class="w-100">
                                         <div class="d-flex w-100 align-items-center bg-pizza-dark rounded-3">
-                                            <label for="locate" class="px-2 cursor-point">
+                                            <a th:href="@{/}" class="px-2">
                                                 <img th:src="@{/images/geo.svg}" width="25px">
-                                            </label>
+                                            </a>
                                             <input type="text" name="locate" id="locate" class="form-control font-fredoka fw-semibold" placeholder="Ingresa tu ubicación">
                                         </div>
                                         <a href="#" type="submit" class="w-100 btn-pizza-yellow fw-semibold font-fredoka mt-3">Ver menú</a>
@@ -213,6 +215,7 @@
 
 <!--Footer-->
     <div th:replace="fragments/layout::footer"></div>
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/script.js}"></script>
 </body>
 </html>
