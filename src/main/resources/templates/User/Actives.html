@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi cuenta</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="fragments/layout::pageloader"></div>
+<div th:replace="fragments/layout::navbar"></div>
+<div th:replace="fragments/layout::header-categories"></div>
+<main>
+    <div>
+        <button onclick="goBack()" class="d-flex justify-content-center align-items-center p-2 font-fredoka fw-semibold size-14 my-2">
+            <div class="d-flex justify-content-center align-items-center rounded-4 bg-pizza-yellow p-1 mx-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                </svg>
+            </div>
+            volver
+        </button>
+    </div>
+    <div class="submain">
+        <!-- Section bar del usuario  -->
+        <div th:replace="fragments/layout::section-bar"></div>
+
+
+        <div class="mx-3 col-6 bg-pizza-gray rounded-3 px-3 box-details box-orders">
+            <div>
+                <div class="p-2 bg-light w-100 rounded-3 my-3" style="height: 150px;"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+<div th:replace="fragments/layout::footer"></div>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

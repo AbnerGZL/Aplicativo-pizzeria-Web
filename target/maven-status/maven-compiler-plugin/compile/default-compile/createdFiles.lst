@@ -1,3 +1,14 @@
-com\example\proyecto\Controllers\HomeController.class
-com\example\proyecto\Controllers\UserController.class
-com\example\proyecto\DemoApplication.class
+com\pizzeria\proyecto\Controllers\GlobalController.class
+com\pizzeria\proyecto\DemoApplication.class
+com\pizzeria\proyecto\Utils\CustomAuthenticationFilter.class
+com\pizzeria\proyecto\Service\PedidoService.class
+com\pizzeria\proyecto\Controllers\AuthController.class
+com\pizzeria\proyecto\Config\SecurityConfig.class
+com\pizzeria\proyecto\Controllers\UserController.class
+com\pizzeria\proyecto\Models\Pedido.class
+com\pizzeria\proyecto\Controllers\HomeController.class
+com\pizzeria\proyecto\Config\WebClientConfig.class
+com\pizzeria\proyecto\Controllers\PedidoController.class
+com\pizzeria\proyecto\Models\Cliente.class
+com\pizzeria\proyecto\Utils\ApiClient.class
+com\pizzeria\proyecto\Utils\CookieAuthenticationFilter.class

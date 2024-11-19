@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Mi cuenta</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
@@ -24,9 +24,8 @@
         <div class="submain">
             <!-- Section bar del usuario  -->
             <div th:replace="fragments/layout::section-bar"></div>
-
-
-                <div class="mx-3 col-6">
+                <div class="mx-3 col-6" id="view-profile">
+                    <h5>Mi información</h5><hr>
                     <div class="grid w-100 rounded-3 font-roboto">
                         <div class="grid mb-2">
                             <div class="size-14 fw-semibold mb-2">Usuario</div>
@@ -34,7 +33,6 @@
                                 <div class="form-style">
                                     holaaaa
                                 </div>
-                                <a href="#" class="size-12 p-2 text-pizza-red style-a">editar</a>
                             </div>
                         </div>
                         <div class="grid mb-2">
@@ -43,14 +41,12 @@
                                 <div class="form-style">
                                     @gmail
                                 </div>
-                                <a href="#" class="size-12 p-2 text-pizza-red style-a">editar</a>
                             </div>
                         </div>
                         <div class="grid mb-2">
                             <div class="size-14 fw-semibold mb-2">Contraseña</div>
                             <div class="d-flex align-items-center justify-content-center">
                                 <input type="password" class="form-style" disabled value="123123123123123">
-                                <a href="#" class="size-12 p-2 text-pizza-red style-a">editar</a>
                             </div>
                         </div>
                         <div class="grid mb-2">
@@ -59,11 +55,47 @@
                                 <div class="form-style">
                                     holaaaa
                                 </div>
-                                <a href="#" class="size-12 p-2 text-pizza-red style-a">editar</a>
                             </div>
                         </div>
                     </div>
+                    <button class="size-12 p-2 btn-pizza-yellow rounded-3 my-3" onclick="changeDetails()">Editar datos</button>
                 </div>
+
+            <div class="mx-3 col-6 disappear" id="edit-profile">
+                <form action="" method="">
+                    <h5>Editar datos</h5><hr>
+                    <div class="grid w-100 rounded-3 font-roboto">
+                        <div class="grid mb-2">
+                            <div class="size-14 fw-semibold mb-2">Usuario</div>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <input type="text" id="username" name="username" value="holaaaaa" class="form-style">
+                            </div>
+                        </div>
+                        <div class="grid mb-2">
+                            <div class="size-14 fw-semibold mb-2">Correo</div>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <input type="text" id="email" name="email" value="@gmail" class="form-style">
+                            </div>
+                        </div>
+                        <div class="grid mb-2">
+                            <div class="size-14 fw-semibold mb-2">Contraseña</div>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <input type="text" id="password" name="password" class="form-style" value="123123123123123">
+                            </div>
+                        </div>
+                        <div class="grid mb-2">
+                            <div class="size-14 fw-semibold mb-2">Dirección</div>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <input type="text" id="locate" name="locate" value="holaaaa" class="form-style">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2">
+                        <button type="submit" class="btn-pizza-yellow size-12 my-2 me-1">Guardar cambios</button>
+                        <button type="button" class="btn btn-dark size-12 my-2 ms-1 rounded-3" onclick="changeDetails()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
             </div>
         </div>
     </main>

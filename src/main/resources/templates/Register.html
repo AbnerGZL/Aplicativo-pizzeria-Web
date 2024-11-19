@@ -33,22 +33,22 @@
             <h2 class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 mb-3 text-center text-sm-start text-md-start text-lg-start text-xl-start">Registrarse</h2>
         </div>
         <div class="text-start">
-            <form method="POST" action="">
+            <form method="POST" th:action="@{/register}">
                 <div class="my-2">
-                    <label for="user" class="my-2 size-18">Nombre de usuario</label>
-                    <input class="form-style" type="text" name="user" id="user" required>
+                    <label for="usuario" class="my-2 size-18">Nombre de usuario</label>
+                    <input class="form-style" type="text" name="usuario" id="usuario" required>
                 </div>
                 <div class="my-2">
-                    <label for="email" class="my-2 size-18">Correo</label>
-                    <input class="form-style" type="email" name="email" id="email" required>
+                    <label for="correo" class="my-2 size-18">Correo</label>
+                    <input class="form-style" type="email" name="correo" id="correo" required>
                 </div>
                 <div class="my-2">
-                    <label for="email" class="my-2 size-18">Teléfono</label>
-                    <input class="form-style" type="number" name="phone" id="phone" required>
+                    <label for="telefono" class="my-2 size-18">Teléfono</label>
+                    <input class="form-style" type="number" name="telefono" id="telefono" required>
                 </div>
                 <div class="my-2">
-                    <label for="email" class="my-2 size-18">Contraseña</label>
-                    <input class="form-style" type="password" name="password" id="password" required>
+                    <label for="contraseña" class="my-2 size-18">Contraseña</label>
+                    <input class="form-style" type="password" name="contraseña" id="contraseña" required>
                 </div>
                 <div class="my-2">
                     <div class="d-flex justify-content-start align-items-center my-1">
