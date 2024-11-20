@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Regístrate</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<!--Pantalla de carga-->
+<div th:replace="fragments/layout::pageloader"></div>
+
+<nav class="d-flex p-2 align-items-center">
+    <div class="d-flex align-items-center justify-content-center col-6">
+        <a th:href="@{/}" class="d-flex p-2 text-pizza-dark rounded-3 gap-1 font-fugaz-one">
+            <img src="">
+            HappyPizza
+        </a>
+    </div>
+</nav>
+
+<main class="d-flex justify-content-center align-items-center">
+    <div class="col-10 col-sm-6 col-md-5 col-lg-5 col-xl-4 col-xxl-3 mx-auto">
+        <div class="d-flex align-items-center w-100 flex-wrap">
+            <div class="d-flex justify-content-start align-items-center col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 mb-3">
+                <button class="btn btn-outline-danger rounded-5 font-fredoka size-12" onclick="goBack()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
+                    </svg>
+                    volver
+                </button>
+            </div>
+            <h2 class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 mb-3 text-center text-sm-start text-md-start text-lg-start text-xl-start">Registrarse</h2>
+        </div>
+        <div class="text-start">
+            <form method="POST" th:action="@{/register}">
+                <div class="my-2">
+                    <label for="usuario" class="my-2 size-18">Nombre de usuario</label>
+                    <input class="form-style" type="text" name="usuario" id="usuario" required>
+                </div>
+                <div class="my-2">
+                    <label for="correo" class="my-2 size-18">Correo</label>
+                    <input class="form-style" type="email" name="correo" id="correo" required>
+                </div>
+                <div class="my-2">
+                    <label for="telefono" class="my-2 size-18">Teléfono</label>
+                    <input class="form-style" type="number" name="telefono" id="telefono" required>
+                </div>
+                <div class="my-2">
+                    <label for="contraseña" class="my-2 size-18">Contraseña</label>
+                    <input class="form-style" type="password" name="contraseña" id="contraseña" required>
+                </div>
+                <div class="my-2">
+                    <div class="d-flex justify-content-start align-items-center my-1">
+                        <input class="checkmark mx-1" type="checkbox" value="1" id="flexCheckChecked1" onchange="registercheckvalidation()">
+                        <label for="flexCheckChecked1" class="mx-1">
+                            Acepto los términos de uso y política de privacidad, entendiendo que mi información
+                            será utilizada tal como se describe en <a href="#">esta página</a>
+                        </label>
+                    </div>
+                    <div class="d-flex justify-content-start align-items-center my-1">
+                        <input class="checkmark mx-1" type="checkbox" value="1" id="flexCheckChecked2">
+                        <label for="flexCheckChecked2" class="mx-1">
+                            Autorizo el tratamiento de mis datos para fines de prospección y promoción
+                            comercial por parte de HappyPizza
+                        </label>
+                    </div>
+                </div>
+                <div class="my-3 w-100">
+                    <button type="submit" id="register" class="btn-disabled rounded-3 fw-bold border-0 w-100" disabled>Registrarse</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

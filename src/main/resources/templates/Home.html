@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Pizza</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<!--Pantalla de carga-->
+    <div th:replace="fragments/layout::pageloader"></div>
+<!--Navbar-->
+    <div th:replace="fragments/layout::navbar"></div>
+
+<!--Contenido principal-->
+    <main>
+        <header class="banner divisor-header">
+            <img th:src="@{/images/pizza.jpg}" alt="Logo" width="100%">
+            <div class="banner_content text-light">
+                <div class="grid w-100 px-3 text-center">
+                    <div class="d-flex align-items-center col-md-5 col-xl-5 col-lg-5 col-sm-6 col-6 justify-content-evenly">
+                        <h1 class="p-2 cursor-null mx-4">Un lugar cálido para probar cosas nuevas con sabor al hogar</h1>
+                    </div>
+                    <div class="d-flex align-items-center my-3 col-md-5 col-xl-5 col-lg-5 col-sm-6 col-6 justify-content-evenly flex-wrap">
+                        <div class="d-flex mx-md-4 mx-lg-4 mx-xl-1 mx-sm-4 mx-4 my-3">
+                            <a class="font-fredoka size-14 fw-semibold py-3 px-4 rounded-4 banner-button-1 text-pizza-red" th:href="@{/oferts}">Ver Ofertas</a>
+                            <a class="font-fredoka size-14 fw-semibold p-3 rounded-4 banner-button-outline-1" href="#">Ver Ofertas</a>
+                        </div>
+                        <div class="d-flex mx-md-4 mx-lg-4 mx-xl-1 mx-sm-4 mx-4 my-3">
+                            <a class="font-fredoka size-14 fw-semibold py-3 px-4 rounded-4 banner-button-2 text-pizza-dark" href="#locate">Ingresar ubicación</a>
+                            <a class="font-fredoka size-14 fw-semibold p-3 rounded-4 banner-button-outline-2" href="#">Ingresar ubicació</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="d-flex w-100 banner-footer text-light">
+            <span class="line"></span>
+            <span class="w-100 mx-auto text-center px-2">¡Delivery gratis en pedidos mayores a s/20!</span>
+            <span class="line"></span>
+        </div>
+
+        <div class="submain">
+            <section id="location">
+                <div class="d-flex px-3 py-2 flex-wrap align-items-center section-1">
+                    <div class="photo mb-4 col-12 col-md-12 col-lg-5 col-xl-6 mx-auto">
+                        <img th:src="@{/images/eat.png}" class="img-fluid">
+                    </div>
+                    <div class="d-flex align-items-center p-4 col-12 col-md-12 col-lg-7 col-xl-6 mx-auto locate-input">
+                        <div class="grid col-8 align-content-center">
+                            <div class="text-light">
+                                <h2>Bienvenido a Happy Pizza</h2>
+                            </div>
+                            <div class="d-flex flex-wrap">
+                                <div class="text-light col-12 my-3 font-roboto">
+                                    Ingrese su dirección para poder personalizar y consultar la disponibilidad de su pedido
+                                </div>
+                                <div class="d-flex col-12">
+                                    <form action="" method="POST" class="w-100">
+                                        <div class="d-flex w-100 align-items-center bg-pizza-dark rounded-3">
+                                            <a th:href="@{/}" class="px-2">
+                                                <img th:src="@{/images/geo.svg}" width="25px">
+                                            </a>
+                                            <input type="text" name="locate" id="locate" class="form-control font-fredoka fw-semibold" placeholder="Ingresa tu ubicación">
+                                        </div>
+                                        <a href="#" type="submit" class="w-100 btn-pizza-yellow fw-semibold font-fredoka mt-3">Ver menú</a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center col-4">
+                            <img th:src="@{/images/pizza_png.png}" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <section id="categories">
+                <div class="d-flex flex-wrap justify-content-evenly mx-auto categories">
+                    <a th:href="@{/oferts}" class="font-fredoka d-flex justify-content-center align-items-center btn-effect-dark">
+                        <div class="container-fluid d-flex align-items-center justify-content-center col-6">
+                            <img th:src="@{/images/coin.svg}" class="img-fluid" width="45px">
+                        </div>
+                        <div class="text-start col-6">
+                            Ofertas
+                        </div>
+                    </a>
+                    <a th:href="@{/combos}" class="font-fredoka d-flex justify-content-center align-items-center btn-effect-dark">
+                        <div class="container-fluid d-flex align-items-center justify-content-center col-6">
+                            <img th:src="@{/images/combo.svg}" class="img-fluid" width="40px">
+                        </div>
+                        <div class="text-start col-6">
+                            Combos
+                        </div>
+                    </a>
+                    <a th:href="@{/drinks}" class="font-fredoka d-flex justify-content-center align-items-center btn-effect-dark">
+                        <div class="container-fluid d-flex align-items-center justify-content-center col-6">
+                            <img th:src="@{/images/bebida.svg}" width="25px">
+                        </div>
+                        <div class="text-start col-6">
+                            Bebidas
+                        </div>
+                    </a>
+                    <a th:href="@{/snacks}" class="font-fredoka d-flex justify-content-center align-items-center btn-effect-dark">
+                        <div class="container-fluid d-flex align-items-center justify-content-center col-5">
+                            <img th:src="@{/images/bread.svg}" width="35px">
+                        </div>
+                        <div class="text-start col-7">
+                            Antojitos
+                        </div>
+                    </a>
+                    <a th:href="@{/unbeatables}" class="font-fredoka d-flex justify-content-center align-items-center btn-effect-dark">
+                        <div class="container-fluid d-flex align-items-center justify-content-center col-5">
+                            <img th:src="@{/images/bicep.svg}" class="img-fluid" width="35px">
+                        </div>
+                        <div class="text-start col-7">
+                            Imbatibles
+                        </div>
+                    </a>
+                    <a th:href="@{/single}" class="font-fredoka d-flex justify-content-center align-items-center btn-effect-dark">
+                        <div class="container-fluid d-flex align-items-center justify-content-center col-5">
+                            <img th:src="@{/images/happy-face.svg}" class="img-fluid" width="35px">
+                        </div>
+                        <div class="text-center col-7">
+                            Para mí
+                        </div>
+                    </a>
+                    <a th:href="@{/pizzas}" class="font-fredoka d-flex justify-content-center align-items-center btn-effect-dark">
+                        <div class="container-fluid d-flex align-items-center justify-content-center col-6">
+                            <img th:src="@{/images/pizza.svg}" class="img-fluid" width="35px">
+                        </div>
+                        <div class="text-start col-6">
+                            Pizzas
+                        </div>
+                    </a>
+                </div>
+            </section>
+    
+            <section class="container-fluid mt-5" id="pizzas">
+                <div class="d-flex w-100 align-items-center justify-content-center my-3 py-2">
+                    <div class="d-flex col-4 col-sm-4 col-md-1 col-lg-1 col-xl-1 align-items-center flex-wrap">
+                        <span class="line-red"></span>
+                        <span class="line-red"></span>
+                    </div>
+                    <h2 class="w-100 mx-auto text-center px-2">Nuestras Pizzas</h2>
+                    <div class="d-flex col-4 col-sm-4 col-md-8 col-lg-8 col-xl-8 align-items-center flex-wrap">
+                        <span class="line-red"></span>
+                        <span class="line-red"></span>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex justify-content-center w-100">
+                        <div class="d-flex align-items-center justify-content-center p-3 col-1 arrow">
+                            <a href="#" class="d-flex align-items-center justify-content-center p-2 rounded-5 text-pizza-dark bg-pizza-yellow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                                  </svg>
+                            </a>
+                        </div>
+                        <div class="carousel-pizzas d-flex mx-auto">
+                            <div class="rounded-4 bg-pizza-gray"></div>
+                            <div class="rounded-4 bg-pizza-gray"></div>
+                            <div class="rounded-4 bg-pizza-gray"></div>
+                            <div class="rounded-4 bg-pizza-gray"></div>
+                            <div class="rounded-4 bg-pizza-gray"></div>
+                            <div class="rounded-4 bg-pizza-gray"></div>
+                            <div class="rounded-4 bg-pizza-gray"></div>
+                            <div class="rounded-4 bg-pizza-gray"></div>
+                            <div class="rounded-4 bg-pizza-gray"></div>
+                            <div class="rounded-4 bg-pizza-gray"></div>
+                            <div class="rounded-4 bg-pizza-gray"></div>
+                            <div class="rounded-4 bg-pizza-gray"></div>
+                            <div class="rounded-4 bg-pizza-gray"></div>
+                            <div class="rounded-4 bg-pizza-gray"></div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center p-3 col-1 arrow">
+                            <a href="#" class="d-flex align-items-center justify-content-center p-2 rounded-5 text-pizza-dark bg-pizza-yellow arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                                  </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="container-fluid mt-3" id="promos">
+                <div class="d-flex w-100 align-items-center justify-content-center my-3 py-2">
+                    <div class="d-flex col-4 col-sm-4 col-md-1 col-lg-1 col-xl-1 align-items-center flex-wrap">
+                        <span class="line-red"></span>
+                        <span class="line-red"></span>
+                    </div>
+                    <h2 class="w-100 mx-auto text-center px-2">¡Promos del día!</h2>
+                    <div class="d-flex col-4 col-sm-4 col-md-8 col-lg-8 col-xl-8 align-items-center flex-wrap">
+                        <span class="line-red"></span>
+                        <span class="line-red"></span>
+                    </div>
+                </div>
+                <div class="my-3 w-100">
+                    <div class="px-3 d-flex w-100 justify-content-center align-items-center flex-wrap">
+                        <div class="d-flex justify-content-evenly align-items-center py-3 px-3 col-12 ofert-container">
+                            <!-- Base de datos -->
+                            <div class="d-flex rounded-4 bg-pizza-gray m-2 block-ofert" style="width: 380px; height: 230px;"></div>
+                            <div class="d-flex rounded-4 bg-pizza-gray m-2 block-ofert" style="width: 380px; height: 230px;"></div>
+                            <div class="d-flex rounded-4 bg-pizza-gray m-2 block-ofert exclude" style="width: 380px; height: 230px;"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-4 justify-content-center size-12 font-fredoka fw-semibold">
+                        <a href="#" class="btn-pizza-yellow">Ver más ofertas</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+<!--Footer-->
+    <div th:replace="fragments/layout::footer"></div>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>
