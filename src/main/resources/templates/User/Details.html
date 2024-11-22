@@ -23,84 +23,82 @@
         </div>
         <div class="submain">
             <!-- Section bar del usuario  -->
-            <div th:replace="fragments/layout::section-bar"></div>
-                <div class="mx-3 col-6" id="view-profile">
-                    <h5>Mi información</h5><hr>
-                    <div class="grid w-100 rounded-3 font-roboto">
-                        <div class="grid mb-2">
-                            <div class="size-14 fw-semibold mb-2">Usuario</div>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <div class="form-style">
-                                    holaaaa
+            <div class="d-flex justify-content-center mx-auto my-3">
+                <div th:replace="fragments/layout::section-bar"></div>
+                    <div class="mx-3 col-6" id="view-profile">
+                        <h5>Mi información</h5><hr>
+                        <div class="grid w-100 rounded-3 font-roboto">
+                            <div class="grid mb-2">
+                                <div class="size-14 fw-semibold mb-2">Usuario</div>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div th:text="${sessionAttributes['username'] != null ? sessionAttributes['username'] : ' ' }" class="form-style" ></div>
+                                </div>
+                            </div>
+                            <div class="grid mb-2">
+                                <div class="size-14 fw-semibold mb-2">Correo</div>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div th:text="${sessionAttributes['correo'] != null ? sessionAttributes['correo'] : ' ' }" class="form-style" ></div>
+                                </div>
+                            </div>
+                            <div class="grid mb-2">
+                                <div class="size-14 fw-semibold mb-2">Contraseña</div>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <input th:value="${sessionAttributes['contrasena'] != null ? sessionAttributes['contrasena'] : ''}" type="password" class="form-style" disabled>
+                                </div>
+                            </div>
+                            <div class="grid mb-2">
+                                <div class="size-14 fw-semibold mb-2">Teléfono</div>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div th:text="${sessionAttributes['telefono'] != null ? sessionAttributes['telefono']: ' ' }" class="form-style" ></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="grid mb-2">
-                            <div class="size-14 fw-semibold mb-2">Correo</div>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <div class="form-style">
-                                    @gmail
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid mb-2">
-                            <div class="size-14 fw-semibold mb-2">Contraseña</div>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <input type="password" class="form-style" disabled value="123123123123123">
-                            </div>
-                        </div>
-                        <div class="grid mb-2">
-                            <div class="size-14 fw-semibold mb-2">Dirección</div>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <div class="form-style">
-                                    holaaaa
-                                </div>
-                            </div>
-                        </div>
+                        <button class="size-12 p-2 btn-pizza-yellow rounded-3 my-3" onclick="changeDetails()">Editar datos</button>
                     </div>
-                    <button class="size-12 p-2 btn-pizza-yellow rounded-3 my-3" onclick="changeDetails()">Editar datos</button>
-                </div>
 
-            <div class="mx-3 col-6 disappear" id="edit-profile">
-                <form action="" method="">
-                    <h5>Editar datos</h5><hr>
-                    <div class="grid w-100 rounded-3 font-roboto">
-                        <div class="grid mb-2">
-                            <div class="size-14 fw-semibold mb-2">Usuario</div>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <input type="text" id="username" name="username" value="holaaaaa" class="form-style">
+                <div class="mx-3 col-6 disappear" id="edit-profile">
+                    <form action="" method="POST">
+                        <h5>Editar datos</h5>
+                        <input type="hidden" id="id_cliente" name="id_cliente" th:value="${sessionAttributes['id'] != null ? sessionAttributes['id'] : ' ' }" readonly>
+                        <hr>
+                        <div class="grid w-100 rounded-3 font-roboto">
+                            <div class="grid mb-2">
+                                <div class="size-14 fw-semibold mb-2">Usuario</div>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <input type="text" id="username" name="username" th:value="${sessionAttributes['username'] != null ? sessionAttributes['username'] : ' ' }" class="form-style">
+                                </div>
+                            </div>
+                            <div class="grid mb-2">
+                                <div class="size-14 fw-semibold mb-2">Correo</div>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <input type="text" id="email" name="email" th:value="${sessionAttributes['correo'] != null ? sessionAttributes['correo'] : ' ' }" class="form-style">
+                                </div>
+                            </div>
+                            <div class="grid mb-2">
+                                <div class="size-14 fw-semibold mb-2">Contraseña</div>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <input type="text" id="password" name="password" class="form-style" th:value="${sessionAttributes['contrasena'] != null ? sessionAttributes['contrasena'] : ' ' }">
+                                </div>
+                            </div>
+                            <div class="grid mb-2">
+                                <div class="size-14 fw-semibold mb-2">Teléfono</div>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <input type="text" id="locate" name="locate" th:value="${sessionAttributes['telefono'] != null ? sessionAttributes['telefono'] : ' ' }" class="form-style">
+                                </div>
                             </div>
                         </div>
-                        <div class="grid mb-2">
-                            <div class="size-14 fw-semibold mb-2">Correo</div>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <input type="text" id="email" name="email" value="@gmail" class="form-style">
-                            </div>
+                        <div class="d-flex mb-2">
+                            <button type="submit" class="btn-pizza-yellow size-12 my-2 me-1">Guardar cambios</button>
+                            <button type="button" class="btn btn-dark size-12 my-2 ms-1 rounded-3" onclick="changeDetails()">Cancelar</button>
                         </div>
-                        <div class="grid mb-2">
-                            <div class="size-14 fw-semibold mb-2">Contraseña</div>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <input type="text" id="password" name="password" class="form-style" value="123123123123123">
-                            </div>
-                        </div>
-                        <div class="grid mb-2">
-                            <div class="size-14 fw-semibold mb-2">Dirección</div>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <input type="text" id="locate" name="locate" value="holaaaa" class="form-style">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex mb-2">
-                        <button type="submit" class="btn-pizza-yellow size-12 my-2 me-1">Guardar cambios</button>
-                        <button type="button" class="btn btn-dark size-12 my-2 ms-1 rounded-3" onclick="changeDetails()">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-            </div>
+                    </form>
+                </div>
+                </div>
+        </div>
         </div>
     </main>
     <div th:replace="fragments/layout::footer"></div>
-    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/script.js}"></script>
 </body>
 </html>

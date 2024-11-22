@@ -14,31 +14,32 @@
 <!--Navbar--->
 <nav th:fragment="navbar" class="d-flex shadow-sm p-2 align-items-center">
     <div class="d-flex align-items-center justify-content-center col-6">
-        <a th:href="@{/}" class="d-flex p-2 text-pizza-dark rounded-3 gap-1 font-fugaz-one">
-            <img src="">
+        <a th:href="@{/}" class="d-flex justify-content-center align-items-center p-1 text-pizza-dark rounded-3 gap-1 font-fugaz-one">
+            <img th:src="@{/images/logo.png}" class="img-fluid" width="40px">
             HappyPizza
         </a>
     </div>
     <div class="d-flex align-items-center justify-content-center col-6 ">
         <a href="tel:+51999999999" class="d-flex px-3 py-1 bg-pizza-yellow text-pizza-dark rounded-3 gap-1 btn-pizza-yellow mx-1">
-            <img src="/images/call.svg" class="img-fluid" width="45px">
+            <img th:src="@{/images/call.svg}" class="img-fluid" width="45px">
             <div id="contactus" class="grid">
                 <h6>Contáctanos</h6>
                 <h6>999-999-999</h6>
             </div>
         </a>
-        <a th:href="@{/user}" class="d-flex px-3 py-2 gap-2 text-pizza-dark rounded-3 mx-1">
-            <img src="/images/user.svg">
-            <div id="login" th:text="${username != null ? username : 'Iniciar Sesión'}">
-                Iniciar Sesión
-            </div>
-        </a>
-<!--        <a th:href="@{/user}" class="d-flex px-3 py-2 gap-2 text-pizza-dark rounded-3 mx-1">-->
+<!--        <a th:href="@{/user}" class="d-flex px-3 py-2 gap-2 text-pizza-dark rounded-3 mx-1 hover-gray">-->
 <!--            <img src="/images/user.svg">-->
-<!--            <div id="login">-->
+<!--            <div id="login" th:text="${username != null ? username : 'Iniciar Sesión'}">-->
 <!--                Iniciar Sesión-->
 <!--            </div>-->
 <!--        </a>-->
+
+        <a th:href="@{/user}" class="d-flex px-3 py-2 gap-2 text-pizza-dark rounded-3 mx-1 hover-gray">
+            <img src="/images/user.svg">
+            <div id="login" th:text="${sessionAttributes['username'] != null ? sessionAttributes['username'] : 'Iniciar Sesión'}">
+                Iniciar Sesión
+            </div>
+        </a>
     </div>
 </nav>
 
@@ -194,7 +195,7 @@
 </footer>
 
 <!--Section bar de usuario-->
-<div  th:fragment="section-bar" class="d-flex justify-content-center mx-auto my-3">
+<div  th:fragment="section-bar" class="d-flex justify-content-center">
     <div class="grid mx-2 p-3">
         <h4 class="text-center">Mi cuenta</h4>
         <div class="grid size-14 fw-semibold">
@@ -215,3 +216,4 @@
             </a>
         </div>
     </div>
+</div>

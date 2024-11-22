@@ -65,16 +65,6 @@ public class HomeController {
         return "Car";
     }
 
-    @GetMapping("login")
-    public String login(){
-        return "Login";
-    }
-
-    @GetMapping("register")
-    public String register(){
-        return "Register";
-    }
-
     @PostMapping("/registro")
     public String registrarCliente(@ModelAttribute Cliente cliente, Model model) {
 //        RestTemplate restTemplate = new RestTemplate();

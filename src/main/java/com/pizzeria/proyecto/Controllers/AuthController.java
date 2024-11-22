@@ -1,96 +1,105 @@
 package com.pizzeria.proyecto.Controllers;
 
+import com.pizzeria.proyecto.Models.Cliente;
 import com.pizzeria.proyecto.Models.LoginRequest;
+import com.pizzeria.proyecto.Service.ClienteService;
+import com.pizzeria.proyecto.Service.SesionService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
-
-import java.util.List;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/")
 @RequiredArgsConstructor
 public class AuthController {
+    private final SesionService sesionService;
+    private final ClienteService clienteService;
 
-    private final WebClient webClient;
+    @PostMapping("login")
+    public String login(@ModelAttribute LoginRequest loginRequest, Model model, HttpServletResponse httpServletResponse, HttpSession session) {
+        if (loginRequest != null) {
+            if (sesionService.Login(loginRequest, httpServletResponse).equals(true)) {
+                session.setAttribute("id", clienteService.getCliente(loginRequest.getUsuario().toString()).block().getId_cliente());
+                session.setAttribute("username", loginRequest.getUsuario());
+                session.setAttribute("correo", clienteService.getCliente(loginRequest.getUsuario().toString()).block().getCorreo());
+                session.setAttribute("telefono", clienteService.getCliente(loginRequest.getUsuario().toString()).block().getTelefono());
+                session.setAttribute("contrasena", loginRequest.getContrasena());
 
-    @PostMapping
-    public String login(@ModelAttribute LoginRequest loginRequest, Model model) {
-        try {
-            webClient.post()
-                    .uri("login")
-                    .bodyValue(loginRequest)
-                    .exchangeToMono(response -> {
-                        // Accede a las cabeceras de la respuesta, incluyendo las cookies en `Set-Cookie`
-                        List<String> cookies = response.headers().header("Set-Cookie");
-
-                        if (cookies != null) {
-                            // Itera sobre las cookies y busca los valores de `access_token` y `refresh_token`
-                            cookies.forEach(cookie -> {
-                                System.out.println("Cookie completa: " + cookie);
-
-                                // Puedes extraer el valor de cada cookie usando una verificación simple
-                                if (cookie.contains("access_token")) {
-                                    String accessToken = extraerValorCookie(cookie, "access_token");
-                                    System.out.println("Access Token: " + accessToken);
-                                }
-                                if (cookie.contains("refresh_token")) {
-                                    String refreshToken = extraerValorCookie(cookie, "refresh_token");
-                                    System.out.println("Refresh Token: " + refreshToken);
-                                }
-                            });
-                        }
-
-                        return response.bodyToMono(String.class);
-                    })
-//                    .doOnError(error -> System.err.println("Error en la solicitud: " + error))
-                    .subscribe();
-
-        } catch (Exception e) {
-            System.out.println("Excepción: " + e.getMessage());
+                return "redirect:/user";
+            } else {
+                model.addAttribute("error", "Credenciales incorrectas");
+                return "login";
+            }
+        } else {
+            model.addAttribute("error", "Fallo en el ingreso de datos");
+            return "login";
         }
-//        String loginResponse = String.valueOf(response.block());
-//
-//        if (loginResponse != null && loginResponse.contains("inicio de sesión exitoso")) {
-//            // Establecer las cookies
-//            Cookie accessTokenCookie = new Cookie("access_token", "someAccessTokenValue");
-//            accessTokenCookie.setHttpOnly(true);
-//            accessTokenCookie.setSecure(true);  // Si usas HTTPS
-//            accessTokenCookie.setPath("/");
-//            accessTokenCookie.setMaxAge(60 * 60); // 1 hora de duración
-//
-//            Cookie refreshTokenCookie = new Cookie("refresh_token", "someRefreshTokenValue");
-//            refreshTokenCookie.setHttpOnly(true);
-//            refreshTokenCookie.setSecure(true);  // Si usas HTTPS
-//            refreshTokenCookie.setPath("/");
-//            refreshTokenCookie.setMaxAge(60 * 60 * 24 * 30); // 30 días de duración
-//
-//            response.addCookie(accessTokenCookie);
-//            response.addCookie(refreshTokenCookie);
-//
-//            return "redirect:/user";
-//        } else {
-//            model.addAttribute("error", "Inicio de sesión fallido. Verifique sus credenciales.");
-//            return "redirect:/login";
-//        }
-        return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletResponse response, HttpSession session) {
+        if (sesionService.Logout(response).equals(true)){
+            session.invalidate();
+            return "redirect:/login?success=true";
+        } else {
+            return "redirect:/login?error=true";
+        }
+    }
 
-
-
-    private String extraerValorCookie(String cookie, String nombre) {
-        String[] partes = cookie.split(";");
-        for (String parte : partes) {
-            if (parte.trim().startsWith(nombre + "=")) {
-                return parte.split("=")[1];
+    @GetMapping("/login")
+    public String loginPage(HttpServletRequest request) {
+        boolean isAuthenticated = false;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("access_token".equals(cookie.getName()) && cookie.getValue() != null) {
+                    isAuthenticated = true;
+                    break;
+                }
             }
         }
-        return null;
+        return isAuthenticated? "redirect:/user" : "login";
+    }
+
+    @GetMapping("/register")
+    public String registerPage(HttpServletRequest request) {
+        boolean isAuthenticated = false;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("access_token".equals(cookie.getName()) && cookie.getValue() != null) {
+                    isAuthenticated = true;
+                    break;
+                }
+            }
+        }
+
+        return isAuthenticated? "redirect:/user" : "register";
+    }
+
+    @PostMapping("/register")
+    public String register(@ModelAttribute Cliente cliente, Model model,  HttpServletResponse response, HttpSession session) {
+        if (cliente != null) {
+
+            if (sesionService.Register(cliente, response).equals(true)) {
+                session.setAttribute("username", cliente.getUsuario());
+                session.setAttribute("contrasena", cliente.getContrasena());
+
+                return "redirect:/user";
+
+            } else {
+                model.addAttribute("error", "Error durante el registro");
+                return "login";
+            }
+
+        } else {
+            model.addAttribute("error", "Fallo en el ingreso de datos");
+            return "login";
+        }
     }
 }

@@ -1,14 +1,20 @@
+//Pantalla de carga
 document.addEventListener("DOMContentLoaded", function() {
     try {
         const loader = document.getElementById("loader");
         setTimeout(() => {
             loader.style.opacity="0%";
             loader.style.pointerEvents="none";
-        }, 100);
+        }, 400);
+
+        //Bloquear entrada de input
+        document.getElementById("id_cliente").addEventListener("keypress", function(e) {
+            e.preventDefault();
+        })
+
     } catch(e){
     }
 });
-
 //Botón volver
 function goBack() {
     window.history.back();

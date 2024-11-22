@@ -5,6 +5,13 @@
     <title>Iniciar Sesión</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script>
+        // Comprobación en el cliente para evitar mostrar la página si el usuario ya está autenticado
+        const isAuthenticated = document.cookie.includes("access_token");
+        if (isAuthenticated) {
+            window.location.href = "/user";
+        }
+    </script>
 </head>
 <body>
 <!--Pantalla de carga-->
@@ -57,7 +64,7 @@
             </div>
         </div>
     </main>
-    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/script.js}"></script>
 </body>
 </html>
