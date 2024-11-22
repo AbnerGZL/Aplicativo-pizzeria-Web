@@ -693,6 +693,9 @@ footer div ul li a:hover {
     #login {
         display: none;
     }
+    #title {
+        display: none;
+    }
     #contactus {
         display: none;
     }
