@@ -1,114 +1,63 @@
 package com.pizzeria.proyecto.Controllers;
 
-import com.pizzeria.proyecto.Models.Cliente;
+import com.pizzeria.proyecto.Models.Repertorio;
+import com.pizzeria.proyecto.Service.RepertorioService;
 import org.springframework.ui.Model;
-import lombok.RequiredArgsConstructor;
-//import org.springframework.security.authentication.AnonymousAuthenticationToken;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.http.*;
+import reactor.core.publisher.Mono;
+import java.util.Map;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
-@RequiredArgsConstructor
-
 public class HomeController {
+
+    private final RepertorioService repertorioService;
+
+    public HomeController(RepertorioService repertorioService) {
+        this.repertorioService = repertorioService;
+    }
 
     @GetMapping
     public String index(Model model){
         return "Home";
     }
 
-    @GetMapping("oferts")
-    public String oferts(){
-        return "Oferts";
-    }
+    @GetMapping("/{categoria}")
+    public String mostrarRepertorio(@PathVariable("categoria") String categoria, Model model) {
+        Map<String, Map<String, String>> categorias = Map.of(
+                "oferts", Map.of("filtro", "Ofertas", "titulo", "Promociones solo para ti"),
+                "combos", Map.of("filtro", "Combos", "titulo", "Los mejores combos"),
+                "drinks", Map.of("filtro", "Bebidas", "titulo", "Escoge tu bebida favorita"),
+                "snacks", Map.of("filtro", "Antojitos", "titulo", "Tus aperivitos favoritos"),
+                "unbeatables", Map.of("filtro", "Imbatibles", "titulo", "Nuestros combos más grandes"),
+                "single", Map.of("filtro", "Para mi", "titulo", "Personaliza tu pedido"),
+                "pizzas", Map.of("filtro", "Pizzas", "titulo", "La especialidad de la casa")
+        );
 
-    @GetMapping("pizzas")
-    public String pizzas(){
-        return "Pizzas";
-    }
+        if (!categorias.containsKey(categoria)) {
+            return "redirect:/error";
+        }
 
-    @GetMapping("drinks")
-    public String drinks(){
-        return "Drinks";
-    }
+        String filtro = categorias.get(categoria).get("filtro");
+        String titulo = categorias.get(categoria).get("titulo");
 
-    @GetMapping("single")
-    public String single(){
-        return "ForMe";
-    }
+        Mono<List<Repertorio>> repertoriosMono = repertorioService.obtenerRepertorios(filtro);
+        List<Repertorio> repertorios = repertoriosMono.block();
 
-    @GetMapping("combos")
-    public String combos(){
-        return "Combos";
-    }
+        model.addAttribute("titulo", titulo);
+        model.addAttribute("repertorios", repertorios);
 
-    @GetMapping("snacks")
-    public String snacks(){
-        return "Snacks";
-    }
-
-    @GetMapping("unbeatables")
-    public String unbeatables(){
-        return "Unbeatables";
+        return "lista_repertorio";
     }
 
     @GetMapping("car")
     public String car(){
         return "Car";
-    }
-
-    @GetMapping("login")
-    public String login(){
-        return "Login";
-    }
-
-    @GetMapping("register")
-    public String register(){
-        return "Register";
-    }
-
-    @PostMapping("/registro")
-    public String registrarCliente(@ModelAttribute Cliente cliente, Model model) {
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//
-//        // Crea el cuerpo de la solicitud como un objeto JSON
-//        String jsonBody = "{"
-//                + "\"USUARIO\": \"" + cliente.getUsuario() + "\", "
-//                + "\"CORREO\": \"" + cliente.getCorreo() + "\", "
-//                + "\"TELEFONO\": " + cliente.getTelefono() + ", "
-//                + "\"CONTRASEÑA\": \"" + cliente.getContrasena() + "\""
-//                + "}";
-//
-//        // Configura el body y los headers
-//        HttpEntity<String> entity = new HttpEntity<>(jsonBody, headers);
-//
-//        // Realiza la solicitud POST al API de Django
-//        try {
-//            ResponseEntity<String> response = restTemplate.exchange(register_url, HttpMethod.POST, entity, String.class);
-//
-//            // Procesa la respuesta
-//            if (response.getStatusCode() == HttpStatus.CREATED) {
-//                model.addAttribute("mensaje", "Usuario registrado exitosamente");
-//                return "registroExitoso";
-//            } else {
-//                model.addAttribute("mensaje", "Error al registrar el usuario");
-//                return "errorRegistro";
-//            }
-//        } catch (Exception e) {
-//            model.addAttribute("mensaje", "Error al conectar con el servidor");
-//            return "errorRegistro";
-//        }
-        return null;
     }
 }
