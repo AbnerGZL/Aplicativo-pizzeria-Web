@@ -30,30 +30,35 @@ public class HomeController {
 
     @GetMapping("/{categoria}")
     public String mostrarRepertorio(@PathVariable("categoria") String categoria, Model model) {
-        Map<String, Map<String, String>> categorias = Map.of(
-                "oferts", Map.of("filtro", "Ofertas", "titulo", "Promociones solo para ti"),
-                "combos", Map.of("filtro", "Combos", "titulo", "Los mejores combos"),
-                "drinks", Map.of("filtro", "Bebidas", "titulo", "Escoge tu bebida favorita"),
-                "snacks", Map.of("filtro", "Antojitos", "titulo", "Tus aperivitos favoritos"),
-                "unbeatables", Map.of("filtro", "Imbatibles", "titulo", "Nuestros combos más grandes"),
-                "single", Map.of("filtro", "Para mi", "titulo", "Personaliza tu pedido"),
-                "pizzas", Map.of("filtro", "Pizzas", "titulo", "La especialidad de la casa")
-        );
+        try {
+            Map<String, Map<String, String>> categorias = Map.of(
+                    "oferts", Map.of("filtro", "Ofertas", "titulo", "Promociones solo para ti"),
+                    "combos", Map.of("filtro", "Combos", "titulo", "Los mejores combos"),
+                    "drinks", Map.of("filtro", "Bebidas", "titulo", "Escoge tu bebida favorita"),
+                    "snacks", Map.of("filtro", "Antojitos", "titulo", "Tus aperivitos favoritos"),
+                    "unbeatables", Map.of("filtro", "Imbatibles", "titulo", "Nuestros combos más grandes"),
+                    "single", Map.of("filtro", "Para mi", "titulo", "Personaliza tu pedido"),
+                    "pizzas", Map.of("filtro", "Pizzas", "titulo", "La especialidad de la casa")
+            );
 
-        if (!categorias.containsKey(categoria)) {
-            return "redirect:/error";
+            if (!categorias.containsKey(categoria)) {
+                return "redirect:/error";
+            }
+
+            String filtro = categorias.get(categoria).get("filtro");
+            String titulo = categorias.get(categoria).get("titulo");
+
+            Mono<List<Repertorio>> repertoriosMono = repertorioService.obtenerRepertorios(filtro);
+            List<Repertorio> repertorios = repertoriosMono.block();
+
+            model.addAttribute("titulo", titulo);
+            model.addAttribute("repertorios", repertorios);
+
+            return "Repertory";
         }
-
-        String filtro = categorias.get(categoria).get("filtro");
-        String titulo = categorias.get(categoria).get("titulo");
-
-        Mono<List<Repertorio>> repertoriosMono = repertorioService.obtenerRepertorios(filtro);
-        List<Repertorio> repertorios = repertoriosMono.block();
-
-        model.addAttribute("titulo", titulo);
-        model.addAttribute("repertorios", repertorios);
-
-        return "lista_repertorio";
+        catch (Exception e) {
+            return "home";
+        }
     }
 
     @GetMapping("car")

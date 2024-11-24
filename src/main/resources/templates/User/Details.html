@@ -25,7 +25,7 @@
             <!-- Section bar del usuario  -->
             <div class="d-flex flex-wrap justify-content-center mx-auto my-3">
                 <div th:replace="fragments/layout::section-bar"></div>
-                    <div class="mx-3 col-6" id="view-profile">
+                    <div class="mx-3 col-11 col-sm-11 col-md-6 col-lg-6 col-xl-6 col-xxl-6" id="view-profile">
                         <h5>Mi información</h5><hr>
                         <div class="grid w-100 rounded-3 font-roboto">
                             <div class="grid mb-2">
@@ -56,7 +56,7 @@
                         <button class="size-12 p-2 btn-pizza-yellow rounded-3 my-3" onclick="changeDetails()">Editar datos</button>
                     </div>
 
-                <div class="mx-3 col-6 disappear" id="edit-profile">
+                <div class="mx-3 mx-3 col-11 col-sm-11 col-md-6 col-lg-6 col-xl-6 col-xxl-6 disappear" id="edit-profile">
                     <form action="" method="POST">
                         <h5>Editar datos</h5>
                         <input type="hidden" id="id_cliente" name="id_cliente" th:value="${sessionAttributes['id'] != null ? sessionAttributes['id'] : ' ' }" readonly>

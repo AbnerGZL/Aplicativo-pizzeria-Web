@@ -87,7 +87,10 @@ public class AuthController {
         if (cliente != null) {
 
             if (sesionService.Register(cliente, response).equals(true)) {
+                session.setAttribute("id", clienteService.getCliente(cliente.getUsuario().toString()).block().getId_cliente());
                 session.setAttribute("username", cliente.getUsuario());
+                session.setAttribute("correo", cliente.getCorreo());
+                session.setAttribute("telefono", cliente.getTelefono());
                 session.setAttribute("contrasena", cliente.getContrasena());
 
                 return "redirect:/user";
