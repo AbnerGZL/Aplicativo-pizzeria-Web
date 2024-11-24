@@ -25,6 +25,13 @@ public class HomeController {
 
     @GetMapping
     public String index(Model model){
+        Mono<List<Repertorio>> repertoriosMonoPizzas = repertorioService.obtenerRepertorios("Pizzas", 8);
+        List<Repertorio> repertoriosPizzas = repertoriosMonoPizzas.block();
+
+        Mono<List<Repertorio>> repertoriosMonoOferta = repertorioService.obtenerRepertorios("Oferta", 8);
+        List<Repertorio> repertoriosOfertas = repertoriosMonoOferta.block();
+        model.addAttribute("pizzas", repertoriosPizzas);
+        model.addAttribute("ofertas", repertoriosOfertas);
         return "Home";
     }
 
@@ -47,7 +54,7 @@ public class HomeController {
         String filtro = categorias.get(categoria).get("filtro");
         String titulo = categorias.get(categoria).get("titulo");
 
-        Mono<List<Repertorio>> repertoriosMono = repertorioService.obtenerRepertorios(filtro);
+        Mono<List<Repertorio>> repertoriosMono = repertorioService.obtenerRepertorios(filtro, 6);
         List<Repertorio> repertorios = repertoriosMono.block();
 
         model.addAttribute("titulo", titulo);
@@ -59,5 +66,15 @@ public class HomeController {
     @GetMapping("car")
     public String car(){
         return "Car";
+    }
+
+    @GetMapping("selector_product")
+    public String selectorProductos(){
+        return "Selector-productos";
+    }
+
+    @GetMapping("selector")
+    public String selector(){
+        return "Selector";
     }
 }

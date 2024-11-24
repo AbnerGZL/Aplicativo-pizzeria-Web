@@ -148,41 +148,95 @@
                         <span class="line-red"></span>
                     </div>
                 </div>
+
                 <div>
                     <div class="d-flex justify-content-center w-100">
                         <div class="d-flex align-items-center justify-content-center p-3 col-1 arrow">
-                            <a href="#" class="d-flex align-items-center justify-content-center p-2 rounded-5 text-pizza-dark bg-pizza-yellow">
+                            <a href="#" id="flecha_izquierda" class="d-flex align-items-center justify-content-center p-2 rounded-5 text-pizza-dark bg-pizza-yellow">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
-                                  </svg>
+                                </svg>
                             </a>
                         </div>
+
                         <div class="carousel-pizzas d-flex mx-auto">
-                            <div class="rounded-4 bg-pizza-gray"></div>
-                            <div class="rounded-4 bg-pizza-gray"></div>
-                            <div class="rounded-4 bg-pizza-gray"></div>
-                            <div class="rounded-4 bg-pizza-gray"></div>
-                            <div class="rounded-4 bg-pizza-gray"></div>
-                            <div class="rounded-4 bg-pizza-gray"></div>
-                            <div class="rounded-4 bg-pizza-gray"></div>
-                            <div class="rounded-4 bg-pizza-gray"></div>
-                            <div class="rounded-4 bg-pizza-gray"></div>
-                            <div class="rounded-4 bg-pizza-gray"></div>
-                            <div class="rounded-4 bg-pizza-gray"></div>
-                            <div class="rounded-4 bg-pizza-gray"></div>
-                            <div class="rounded-4 bg-pizza-gray"></div>
-                            <div class="rounded-4 bg-pizza-gray"></div>
+                            <div th:each="pizza : ${pizzas}" class="rounded-4">
+                                <div class="flip-container">
+                                    <div class="front">
+                                        <img th:src="@{${pizza.imagen}}" class="img-cover rounded-4" alt="Pizza">
+                                    </div>
+                                    <div class="back">
+                                        <p th:text="${pizza.titulo}"></p>
+                                        <a class="btn" style="background-color: #D03139; color: white">¡Pedir!</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+
+
                         <div class="d-flex align-items-center justify-content-center p-3 col-1 arrow">
-                            <a href="#" class="d-flex align-items-center justify-content-center p-2 rounded-5 text-pizza-dark bg-pizza-yellow arrow">
+                            <a href="#" id="flecha_derecha" class="d-flex align-items-center justify-content-center p-2 rounded-5 text-pizza-dark bg-pizza-yellow arrow">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
-                                  </svg>
+                                </svg>
                             </a>
                         </div>
                     </div>
                 </div>
+
+
+
             </section>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const flechaIzquierda = document.getElementById("flecha_izquierda");
+                    const flechaDerecha = document.getElementById("flecha_derecha");
+                    const carousel = document.querySelector(".carousel-pizzas");
+                    const items = Array.from(carousel.children);
+
+                    const desplazamiento = 260;
+
+                    items.forEach(item => {
+                        const cloneStart = item.cloneNode(true);
+                        const cloneEnd = item.cloneNode(true);
+                        carousel.appendChild(cloneEnd);
+                        carousel.insertBefore(cloneStart, carousel.firstChild);
+                    });
+
+                    const totalItems = items.length;
+                    carousel.scrollLeft = totalItems * desplazamiento;
+
+                    flechaIzquierda.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        carousel.scrollBy({
+                            left: -desplazamiento,
+                            behavior: "smooth"
+                        });
+                        setTimeout(() => {
+                            if (carousel.scrollLeft < totalItems * desplazamiento) {
+                                carousel.scrollLeft += totalItems * desplazamiento;
+                            }
+                        }, 500);
+                    });
+
+                    flechaDerecha.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        carousel.scrollBy({
+                            left: desplazamiento,
+                            behavior: "smooth"
+                        });
+                        setTimeout(() => {
+                            if (carousel.scrollLeft >= (totalItems * 2) * desplazamiento) {
+                                carousel.scrollLeft -= totalItems * desplazamiento;
+                            }
+                        }, 500);
+                    });
+                });
+            </script>
+
+
             <section class="container-fluid mt-3" id="promos">
                 <div class="d-flex w-100 align-items-center justify-content-center my-3 py-2">
                     <div class="d-flex col-4 col-sm-4 col-md-1 col-lg-1 col-xl-1 align-items-center flex-wrap">
@@ -198,10 +252,16 @@
                 <div class="my-3 w-100">
                     <div class="px-3 d-flex w-100 justify-content-center align-items-center flex-wrap">
                         <div class="d-flex justify-content-evenly align-items-center py-3 px-3 col-12 ofert-container">
-                            <!-- Base de datos -->
-                            <div class="d-flex rounded-4 bg-pizza-gray m-2 block-ofert" style="width: 380px; height: 230px;"></div>
-                            <div class="d-flex rounded-4 bg-pizza-gray m-2 block-ofert" style="width: 380px; height: 230px;"></div>
-                            <div class="d-flex rounded-4 bg-pizza-gray m-2 block-ofert exclude" style="width: 380px; height: 230px;"></div>
+
+                            <div th:each="oferta : ${ofertas}" class="d-flex rounded-4 bg-pizza-gray m-2 block-ofert" style="width: 380px; height: 230px;">
+                                <div class="parte_frontal_oferta">
+                                    <img th:src="@{${oferta.imagen}}" class="img-cover rounded-4" alt="Oferta">
+                                </div>
+                                <div class="parte_trasera_oferta d-flex flex-column justify-content-center align-items-center">
+                                    <h5 th:text="${oferta.titulo}" class="mb-2"></h5>
+                                    <a class="btn" style="background-color: #D03139; color: white">¡Pedir!</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex mb-4 justify-content-center size-12 font-fredoka fw-semibold">

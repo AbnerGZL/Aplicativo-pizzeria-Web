@@ -1,10 +1,184 @@
 <!DOCTYPE html>
-<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Elige el que prefieras</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
+<main>
+    <div class="submain">
+        <!-- Franjas -->
+        <div class="d-flex w-100 align-items-center justify-content-center my-3 py-2">
+            <div class="d-flex col-3 col-sm-4 col-md-1 col-lg-1 col-xl-1 align-items-center flex-wrap">
+                <span class="line-red"></span>
+                <span class="line-red"></span>
+            </div>
+            <h2 class="w-100 mx-auto text-center px-2">Selecciona tu pizza</h2>
+            <div class="d-flex col-3 col-sm-4 col-md-8 col-lg-8 col-xl-8 align-items-center flex-wrap">
+                <span class="line-red"></span>
+                <span class="line-red"></span>
+            </div>
+        </div>
 
+        <!-- Botón -->
+        <div>
+            <button onclick="goBack()" class="d-flex justify-content-center align-items-center p-2 font-fredoka fw-semibold size-14 my-2">
+                <div class="d-flex justify-content-center align-items-center rounded-4 bg-pizza-yellow p-1 mx-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                    </svg>
+                </div>
+                Volver
+            </button>
+        </div>
+
+        <!-- Cards de las pizzas -->
+        <!--máximo 115 caracteres, luego se añade "..."-->
+        <div class="my-3 w-100">
+            <div class="row g-4 d-flex justify-content-center">
+                <!-- Aquí inicia la carta -->
+                <div class="col-10 col-sm-6 col-xl-4 mb-4">
+                    <div class="card d-flex flex-column rounded-4" style="min-height: 220px;">
+                        <div class="row g-0 flex-grow-1">
+                            <div class="col-12 col-lg-6">
+                                <img src="images/pizza.jpg" class="img-fluid h-100 rounded-4" alt="Pizza" style="object-fit: cover;">
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="card-body">
+                                    <h5 class="card-title size-14">Titulo de nuestra Pizza</h5>
+                                    <p class="card-text size-14">Descripcion de la rica y deliciosa pizza para toda la familia xd</p>
+                                    <select class="w-100 mb-2" style="background-color: #d9d9d9; color: #8a8a8a; border:#8a8a8a solid 1px; border-radius: 6px;">
+                                        <option>saa</option>
+                                        <option>saa</option>
+                                        <option>saa</option>
+                                    </select>
+                                    <a href="#" class="btn btn-dark w-100 font-fredoka size-14">Seleccionar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--acá termina-->
+                <!-- Aquí inicia la carta -->
+                <div class="col-10 col-sm-6 col-xl-4 mb-4">
+                    <div class="card d-flex flex-column rounded-4" style="min-height: 220px;">
+                        <div class="row g-0 flex-grow-1">
+                            <div class="col-12 col-lg-6">
+                                <img src="images/pizza.jpg" class="img-fluid h-100 rounded-4" alt="Pizza" style="object-fit: cover;">
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="card-body">
+                                    <h5 class="card-title size-14">Titulo de nuestra Pizza</h5>
+                                    <p class="card-text size-14">Descripcion de la rica y deliciosa pizza para toda la familia xd</p>
+                                    <select class="w-100 mb-2" style="background-color: #d9d9d9; color: #8a8a8a; border:#8a8a8a solid 1px; border-radius: 6px;">
+                                        <option>saa</option>
+                                        <option>saa</option>
+                                        <option>saa</option>
+                                    </select>
+                                    <a href="#" class="btn btn-dark w-100 font-fredoka size-14">Seleccionar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--acá termina-->
+                <!-- Aquí inicia la carta -->
+                <div class="col-10 col-sm-6 col-xl-4 mb-4">
+                    <div class="card d-flex flex-column rounded-4" style="min-height: 220px;">
+                        <div class="row g-0 flex-grow-1">
+                            <div class="col-12 col-lg-6">
+                                <img src="images/pizza.jpg" class="img-fluid h-100 rounded-4" alt="Pizza" style="object-fit: cover;">
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="card-body">
+                                    <h5 class="card-title size-14">Titulo de nuestra Pizza</h5>
+                                    <p class="card-text size-14">Descripcion de la rica y deliciosa pizza para toda la familia xd</p>
+                                    <select class="w-100 mb-2" style="background-color: #d9d9d9; color: #8a8a8a; border:#8a8a8a solid 1px; border-radius: 6px;">
+                                        <option>saa</option>
+                                        <option>saa</option>
+                                        <option>saa</option>
+                                    </select>
+                                    <a href="#" class="btn btn-dark w-100 font-fredoka size-14">Seleccionar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--acá termina-->
+                <!-- Aquí inicia la carta -->
+                <div class="col-10 col-sm-6 col-xl-4 mb-4">
+                    <div class="card d-flex flex-column rounded-4" style="min-height: 220px;">
+                        <div class="row g-0 flex-grow-1">
+                            <div class="col-12 col-lg-6">
+                                <img src="images/pizza.jpg" class="img-fluid h-100 rounded-4" alt="Pizza" style="object-fit: cover;">
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="card-body">
+                                    <h5 class="card-title size-14">Titulo de nuestra Pizza</h5>
+                                    <p class="card-text size-14">Descripcion de la rica y deliciosa pizza para toda la familia xd</p>
+                                    <select class="w-100 mb-2" style="background-color: #d9d9d9; color: #8a8a8a; border:#8a8a8a solid 1px; border-radius: 6px;">
+                                        <option>saa</option>
+                                        <option>saa</option>
+                                        <option>saa</option>
+                                    </select>
+                                    <a href="#" class="btn btn-dark w-100 font-fredoka size-14">Seleccionar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--acá termina-->
+                <!-- Aquí inicia la carta -->
+                <div class="col-10 col-sm-6 col-xl-4 mb-4">
+                    <div class="card d-flex flex-column rounded-4" style="min-height: 220px;">
+                        <div class="row g-0 flex-grow-1">
+                            <div class="col-12 col-lg-6">
+                                <img src="images/pizza.jpg" class="img-fluid h-100 rounded-4" alt="Pizza" style="object-fit: cover;">
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="card-body">
+                                    <h5 class="card-title size-14">Titulo de nuestra Pizza</h5>
+                                    <p class="card-text size-14">Descripcion de la rica y deliciosa pizza para toda la familia xd</p>
+                                    <select class="w-100 mb-2" style="background-color: #d9d9d9; color: #8a8a8a; border:#8a8a8a solid 1px; border-radius: 6px;">
+                                        <option>saa</option>
+                                        <option>saa</option>
+                                        <option>saa</option>
+                                    </select>
+                                    <a href="#" class="btn btn-dark w-100 font-fredoka size-14">Seleccionar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--acá termina-->
+                <!-- Aquí inicia la carta -->
+                <div class="col-10 col-sm-6 col-xl-4 mb-4">
+                    <div class="card d-flex flex-column rounded-4" style="min-height: 220px;">
+                        <div class="row g-0 flex-grow-1">
+                            <div class="col-12 col-lg-6">
+                                <img src="images/pizza.jpg" class="img-fluid h-100 rounded-4" alt="Pizza" style="object-fit: cover;">
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="card-body">
+                                    <h5 class="card-title size-14">Titulo de nuestra Pizza</h5>
+                                    <p class="card-text size-14">Descripcion de la rica y deliciosa pizza para toda la familia xd </p>
+                                    <select class="w-100 mb-2" style="background-color: #d9d9d9; color: #8a8a8a; border:#8a8a8a solid 1px; border-radius: 6px;">
+                                        <option>saa</option>
+                                        <option>saa</option>
+                                        <option>saa</option>
+                                    </select>
+                                    <a href="#" class="btn btn-dark w-100 font-fredoka size-14">Seleccionar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--acá termina-->
+            </div>
+        </div>
+    </div>
+</main>
 </body>
 </html>
