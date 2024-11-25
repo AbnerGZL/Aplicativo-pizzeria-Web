@@ -1,63 +1,61 @@
 <!DOCTYPE html>
-<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Combos</title>
-  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-  <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <meta charset="UTF-8">
+    <title>Combos</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 <div th:replace="fragments/layout::pageloader"></div>
-
 <div th:replace="fragments/layout::navbar"></div>
 <div th:replace="fragments/layout::header-categories"></div>
 <main>
-  <div class="submain">
-    <section class="container-fluid" id="oferts">
-      <div class="d-flex w-100 align-items-center justify-content-center my-3 py-2">
-        <div class="d-flex col-3 col-sm-4 col-md-1 col-lg-1 col-xl-1 align-items-center flex-wrap">
-          <span class="line-red"></span>
-          <span class="line-red"></span>
-        </div>
-        <h2 class="w-100 mx-auto text-center px-2" th:text="${titulo}"></h2>
-        <div class="d-flex col-3 col-sm-4 col-md-8 col-lg-8 col-xl-8 align-items-center flex-wrap">
-          <span class="line-red"></span>
-          <span class="line-red"></span>
-        </div>
-      </div>
-
-      <div class="my-3 w-100">
-        <div class="row d-flex justify-content-center">
-          <div th:if="${#lists.isEmpty(repertorios)}" class="col-12 text-center">
-            <p>Sin registros por ahora</p>
-          </div>
-          <!--cambiará según los filtros, pero todos serán del Objeto Repertorio-->
-          <div th:each="repertorio : ${repertorios}" class="col-10 col-sm-6 col-xl-4 mb-4">
-            <!--acá inicia la tarjeta-->
-            <div class="card d-flex flex-column" style="min-height: 220px;">
-              <div class="row g-0 flex-grow-1">
-                <div class="col-12 col-lg-6">
-                  <img th:src="@{${repertorio.imagen}}" class="img-fluid h-100" alt="Pizza">
+    <div class="submain">
+        <section class="container-fluid" id="oferts">
+            <div class="d-flex w-100 align-items-center justify-content-center my-3 py-2">
+                <div class="d-flex col-3 col-sm-4 col-md-1 col-lg-1 col-xl-1 align-items-center flex-wrap">
+                    <span class="line-red"></span>
+                    <span class="line-red"></span>
                 </div>
-                <div class="col-12 col-lg-6">
-                  <div class="card-body">
-                    <h5 class="card-title size-14" th:text="${repertorio.titulo}"></h5>
-                    <p class="card-text size-14" th:text="${repertorio.descripcion}"></p>
-                    <p class="text-muted">
-                      <strong th:text="'S/.' + ${repertorio.precio}"></strong>
-                    </p>
-                    <a href="#" class="btn btn-dark w-100 font-fredoka size-14">Seleccionar</a>
-                  </div>
+                <h2 class="w-100 mx-auto text-center px-2" th:text="${titulo}"></h2>
+                <div class="d-flex col-3 col-sm-4 col-md-8 col-lg-8 col-xl-8 align-items-center flex-wrap">
+                    <span class="line-red"></span>
+                    <span class="line-red"></span>
                 </div>
-              </div>
             </div>
-            <!--acá termina la tarjeta-->
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+
+            <div class="my-3 w-100">
+                <div class="row d-flex justify-content-center">
+                    <div th:if="${#lists.isEmpty(repertorios)}" class="col-12 text-center">
+                        <p>Sin registros por ahora</p>
+                    </div>
+                    <!--cambiará según los filtros, pero todos serán del Objeto Repertorio-->
+                    <div th:each="repertorio : ${repertorios}" class="col-10 col-sm-6 col-xl-4 mb-4">
+                        <!--acá inicia la tarjeta-->
+                        <div class="card d-flex flex-column rounded-4" style="min-height: 220px;">
+                            <div class="row g-0 flex-grow-1">
+                                <div class="col-12 col-lg-6">
+                                    <img th:src="@{${repertorio.imagen}}" class="img-fluid h-100" alt="Pizza">
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="card-body">
+                                        <h5 class="card-title size-14" th:text="${repertorio.titulo}"></h5>
+                                        <p class="card-text size-14" th:text="${repertorio.descripcion}"></p>
+                                        <p class="text-muted">
+                                            <strong th:text="'S/.' + ${repertorio.precio}"></strong>
+                                        </p>
+                                        <a href="#" class="btn btn-dark w-100 font-fredoka size-14">Seleccionar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--acá termina la tarjeta-->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </main>
 <div th:replace="fragments/layout::footer"></div>
 <script th:src="@{/js/script.js}"></script>

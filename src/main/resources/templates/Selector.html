@@ -4,8 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edita tu pedido</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
+<main>
+
+    <div class="submain">
+
+        <div>
+            <button onclick="goBack()" class="d-flex justify-content-center align-items-center p-2 font-fredoka fw-semibold size-14 my-2">
+                <div class="d-flex justify-content-center align-items-center rounded-4 bg-pizza-yellow p-1 mx-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                    </svg>
+                </div>
+                Volver
+            </button>
+        </div>
+
+        <div class="w-100 d-flex align-items-center justify-content-center">
+            <div class="card" style="width: 22rem; box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.2);">
+            <img src="images/pizza.jpg" class="card-img-top" alt="img">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <h5 class="card-title">Trío mediana</h5>
+                    <h5 class="card-title">S/. 40.90</h5>
+                </div>
+
+                <div style="background-color: #d9d9d9; border: solid 1px #a7a7a7; color: #000" class="rounded-2 w-100 d-flex justify-content-between align-items-center p-2 mb-3">
+                    <p class="m-0">1° Pizza</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
+                        <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"/>
+                    </svg>
+                </div>
+                <div style="background-color: #d9d9d9; border: solid 1px #a7a7a7; color: #8a8a8a" class="rounded-2 w-100 d-flex justify-content-between align-items-center p-2 mb-3">
+                    <p class="m-0">1° Pizza</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
+                        <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"/>
+                    </svg>
+                </div>
+                <div style="background-color: #d9d9d9; border: solid 1px #a7a7a7; color: #8a8a8a" class="rounded-2 w-100 d-flex justify-content-between align-items-center p-2 mb-3">
+                    <p class="m-0">1° Pizza</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
+                        <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"/>
+                    </svg>
+                </div>
+
+                <div class="d-flex align-items-end w-100 justify-content-end">
+                    <a href="#" class="btn me-2" style="background-color: #D03139;">Cancelar</a>
+                    <a href="#" class="btn" style="background-color: #ffd40d;">Agregar</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</main>
 
 </body>
 </html>
