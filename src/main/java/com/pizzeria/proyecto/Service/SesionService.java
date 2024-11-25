@@ -4,11 +4,8 @@ import com.pizzeria.proyecto.Models.Cliente;
 import com.pizzeria.proyecto.Models.LoginRequest;
 import com.pizzeria.proyecto.Repositories.SesionRepository;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
@@ -20,7 +17,7 @@ public class SesionService extends SesionRepository {
 
     public Boolean Login(LoginRequest loginRequest, HttpServletResponse httpServletResponse) {
 
-        // Lógica de negocio
+
 
         if (postLogin(loginRequest, httpServletResponse)){
             
@@ -51,11 +48,18 @@ public class SesionService extends SesionRepository {
         }
     }
 
-    public Boolean Register(Cliente cliente, HttpServletResponse response){
+    public String Register(Cliente cliente, HttpServletResponse response){
 
-        // Logica de negocio
+        if (cliente.getTelefono().toString().length() != 9 || !cliente.getTelefono().toString().contains("9")){
+            return "Debe ser un número de teléfono real";
+        } else{
+            if (postRegister(cliente, response)){
+                return "hecho";
+            }
+            else {
+                return "Hubo un problema al inciar sesión";
+            }
 
-        postRegister(cliente, response);
-        return true;
+        }
     }
 }

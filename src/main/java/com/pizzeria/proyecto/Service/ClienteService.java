@@ -25,4 +25,12 @@ public class ClienteService extends ClienteRepository {
             return Mono.empty();
         }
     }
+
+    public boolean editCliente(Cliente cliente) {
+        if (cliente.getId_cliente() != null) {
+            return put(cliente);
+        } else {
+            return false;
+        }
+    }
 }

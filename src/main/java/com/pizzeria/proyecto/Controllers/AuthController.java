@@ -33,15 +33,19 @@ public class AuthController {
                 return "redirect:/user";
             } else {
                 model.addAttribute("error", "Credenciales incorrectas");
-                return "login";
+                model.addAttribute("username", loginRequest.getUsuario());
+                model.addAttribute("contrasena", loginRequest.getContrasena());
+                return "Login";
             }
         } else {
             model.addAttribute("error", "Fallo en el ingreso de datos");
-            return "login";
+            model.addAttribute("username", loginRequest.getUsuario());
+            model.addAttribute("contrasena", loginRequest.getContrasena());
+            return "Login";
         }
     }
 
-    @GetMapping("/logout")
+    @GetMapping("logout")
     public String logout(HttpServletResponse response, HttpSession session) {
         if (sesionService.Logout(response).equals(true)){
             session.invalidate();
@@ -51,7 +55,7 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/login")
+    @GetMapping("login")
     public String loginPage(HttpServletRequest request) {
         boolean isAuthenticated = false;
         Cookie[] cookies = request.getCookies();
@@ -66,7 +70,7 @@ public class AuthController {
         return isAuthenticated? "redirect:/user" : "login";
     }
 
-    @GetMapping("/register")
+    @GetMapping("register")
     public String registerPage(HttpServletRequest request) {
         boolean isAuthenticated = false;
         Cookie[] cookies = request.getCookies();
@@ -82,11 +86,12 @@ public class AuthController {
         return isAuthenticated? "redirect:/user" : "register";
     }
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public String register(@ModelAttribute Cliente cliente, Model model,  HttpServletResponse response, HttpSession session) {
         if (cliente != null) {
-
-            if (sesionService.Register(cliente, response).equals(true)) {
+            String result = sesionService.Register(cliente, response);
+            if (result.equals("hecho")) {
+                System.out.println("estacion 1");
                 session.setAttribute("id", clienteService.getCliente(cliente.getUsuario().toString()).block().getId_cliente());
                 session.setAttribute("username", cliente.getUsuario());
                 session.setAttribute("correo", cliente.getCorreo());
@@ -96,13 +101,23 @@ public class AuthController {
                 return "redirect:/user";
 
             } else {
-                model.addAttribute("error", "Error durante el registro");
-                return "login";
+                System.out.println("estacion 2");
+                model.addAttribute("error", result);
+                model.addAttribute("username", cliente.getUsuario());
+                model.addAttribute("correo", cliente.getCorreo());
+                model.addAttribute("telefono", cliente.getTelefono());
+                model.addAttribute("contrasena", cliente.getContrasena());
+                return "Register";
             }
 
         } else {
-            model.addAttribute("error", "Fallo en el ingreso de datos");
-            return "login";
+            System.out.println("estacion 3");
+            model.addAttribute("error", "Fallo en el envío de datos");
+            model.addAttribute("username", cliente.getUsuario());
+            model.addAttribute("correo", cliente.getCorreo());
+            model.addAttribute("telefono", cliente.getTelefono());
+            model.addAttribute("contrasena", cliente.getContrasena());
+            return "Register";
         }
     }
 }

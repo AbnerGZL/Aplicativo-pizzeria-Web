@@ -12,6 +12,20 @@ document.addEventListener("DOMContentLoaded", function() {
             e.preventDefault();
         })
 
+        // Quitar formulario de edición de datos del cliente
+        document.getElementById("cancelEdit").addEventListener("click", function() {
+            changeDetails()
+            document.getElementById("username").value = document.getElementById("dat-user").textContent;
+            document.getElementById("email").value = document.getElementById("dat-email").textContent;
+            document.getElementById("password").value = document.getElementById("dat-password").value;
+            document.getElementById("phone").value = document.getElementById("dat-phone").textContent;
+        })
+
+        // Abrir formulario de edición de datos del cliente
+        document.getElementById("openEdit").addEventListener("click", function() {
+            changeDetails()
+        })
+
     } catch(e){
     }
 });
