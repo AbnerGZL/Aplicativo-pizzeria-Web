@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Combos</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="fragments/layout::pageloader"></div>
+<div th:replace="fragments/layout::navbar"></div>
+<div th:replace="fragments/layout::header-categories"></div>
+<main>
+    <div class="submain">
+        <section class="container-fluid" id="oferts">
+            <div class="d-flex w-100 align-items-center justify-content-center my-3 py-2">
+                <div class="d-flex col-3 col-sm-4 col-md-1 col-lg-1 col-xl-1 align-items-center flex-wrap">
+                    <span class="line-red"></span>
+                    <span class="line-red"></span>
+                </div>
+                <h2 class="w-100 mx-auto text-center px-2" th:text="${titulo}"></h2>
+                <div class="d-flex col-3 col-sm-4 col-md-8 col-lg-8 col-xl-8 align-items-center flex-wrap">
+                    <span class="line-red"></span>
+                    <span class="line-red"></span>
+                </div>
+            </div>
+
+            <div class="my-4">
+                <div class="d-flex flex-wrap justify-content-evenly">
+                    <div th:if="${#lists.isEmpty(repertorios)}" class="col-12 text-center">
+                        <p>Sin registros por ahora</p>
+                    </div>
+                        
+                        <div th:each="repertorio : ${repertorios}" class="d-flex justify-content-center align-items-center rounded-4 card-repertory p-0 m-2">
+                            <div class="d-flex flex-wrap justify-content-center align-items-center col-12 h-100">
+                                <a href="" class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 card-img-selection">
+                                    <img th:src="@{${repertorio.imagen}}" alt=".">
+                                </a>
+                                <div class="p-2 col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 card-body-selection">
+                                    <div>
+                                        <h5 class="card-title mb-2" th:text="${repertorio.titulo}"></h5>
+                                    </div>
+                                    <div class="card-description card-text size-14 mb-2" th:text="${repertorio.descripcion}"></div>
+                                    <p class="text-muted"><strong th:text="'S/.' + ${repertorio.precio}"></strong></p>
+                                    <div>
+                                        <a th:href="@{#}" class="btn btn-dark w-100 font-fredoka size-14">Seleccionar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    <!-- </div> -->
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+<div th:replace="fragments/layout::footer"></div>
+<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

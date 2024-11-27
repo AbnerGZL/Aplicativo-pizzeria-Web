@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script>
+        // Comprobación en el cliente para evitar mostrar la página si el usuario ya está autenticado
+        const isAuthenticated = document.cookie.includes("access_token");
+        if (isAuthenticated) {
+            window.location.href = "/user";
+        }
+    </script>
+</head>
+<body>
+<!--Pantalla de carga-->
+<div th:replace="fragments/layout::pageloader"></div>
+
+    <nav class="d-flex p-2 align-items-center">
+        <div class="d-flex align-items-center justify-content-center col-6">
+            <a th:href="@{/}" class="d-flex align-items-center py-2 text-pizza-dark rounded-3 gap-1 font-fugaz-one">
+                <img th:src="@{/images/logo.png}" class="img-fluid" width="40px">
+                HappyPizza
+            </a>
+        </div>
+    </nav>
+
+    <main class="d-flex justify-content-center align-items-center">
+        <div class="col-10 col-sm-6 col-md-5 col-lg-5 col-xl-4 col-xxl-3 mx-auto">
+            <div class="d-flex align-items-center w-100 flex-wrap">
+                <div class="d-flex justify-content-start align-items-center col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 mb-3">
+                    <button class="btn btn-outline-danger rounded-5 font-fredoka size-12" onclick="goBack()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
+                        </svg>
+                        volver
+                    </button>
+                </div>
+                <h2 class="col-12 mb-3 text-center">Iniciar Sesión</h2>
+            </div>
+            <div class="text-start">
+                <form method="POST" th:action="@{/login}">
+                    <div class="font-roboto size-14">
+                        <p>Eres un usuario nuevo? <a th:href="@{/register}" class="text-decoration-underline text-primary">Registrarse</a></p>
+                    </div>
+                    <div th:class="${error != null? 'p-3 error font-fredoka' : 'disabled'}" th:text="${error != null? error : ''}">Error</div>
+                    <div class="my-2">
+                        <label for="usuario" class="my-2 size-18">Nombre de usuario</label>
+                        <input class="form-style" type="text" name="usuario" id="usuario" th:value="${username != null? username : ''}" required>
+                    </div>
+                    <div class="my-2">
+                        <label for="contrasena" class="my-2 size-18">Contraseña</label>
+                        <input class="form-style" type="password" name="contrasena" id="contrasena" th:value="${contrasena != null? contrasena : ''}" required>
+                    </div>
+
+                    <div class="font-roboto size-14 my-3">
+                        <a href="#" class="text-decoration-underline text-primary">Olvidé mi contraseña</a>
+                    </div>
+
+                    <div class="my-3 w-100">
+                        <button type="submit" class="btn-pizza-yellow rounded-3 fw-bold border-0 w-100">Iniciar sesión</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>
