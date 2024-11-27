@@ -25,33 +25,31 @@
                 </div>
             </div>
 
-            <div class="my-3 w-100">
-                <div class="row d-flex justify-content-center">
+            <div class="my-4">
+                <div class="d-flex flex-wrap justify-content-evenly">
                     <div th:if="${#lists.isEmpty(repertorios)}" class="col-12 text-center">
                         <p>Sin registros por ahora</p>
                     </div>
-                    <!--cambiará según los filtros, pero todos serán del Objeto Repertorio-->
-                    <div th:each="repertorio : ${repertorios}" class="col-10 col-sm-6 col-xl-4 mb-4">
-                        <!--acá inicia la tarjeta-->
-                        <div class="card d-flex flex-column rounded-4" style="min-height: 220px;">
-                            <div class="row g-0 flex-grow-1">
-                                <div class="col-12 col-lg-6">
-                                    <img th:src="@{${repertorio.imagen}}" class="img-fluid h-100" alt="Pizza">
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="card-body">
-                                        <h5 class="card-title" th:text="${repertorio.titulo}"></h5>
-                                        <p class="card-text size-14" th:text="${repertorio.descripcion}"></p>
-                                        <p class="text-muted">
-                                            <strong th:text="'S/.' + ${repertorio.precio}"></strong>
-                                        </p>
-                                        <a href="#" class="btn btn-dark w-100 font-fredoka size-14">Seleccionar</a>
+                        
+                        <div th:each="repertorio : ${repertorios}" class="d-flex justify-content-center align-items-center rounded-4 card-repertory p-0 m-2">
+                            <div class="d-flex flex-wrap justify-content-center align-items-center col-12 h-100">
+                                <a href="" class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 card-img-selection">
+                                    <img th:src="@{${repertorio.imagen}}" alt=".">
+                                </a>
+                                <div class="p-2 col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 card-body-selection">
+                                    <div>
+                                        <h5 class="card-title mb-2" th:text="${repertorio.titulo}"></h5>
+                                    </div>
+                                    <div class="card-description card-text size-14 mb-2" th:text="${repertorio.descripcion}"></div>
+                                    <p class="text-muted"><strong th:text="'S/.' + ${repertorio.precio}"></strong></p>
+                                    <div>
+                                        <a th:href="@{#}" class="btn btn-dark w-100 font-fredoka size-14">Seleccionar</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--acá termina la tarjeta-->
-                    </div>
+                        
+                    <!-- </div> -->
                 </div>
             </div>
         </section>

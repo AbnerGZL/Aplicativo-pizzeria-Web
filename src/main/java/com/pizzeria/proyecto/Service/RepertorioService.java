@@ -18,15 +18,23 @@ public class RepertorioService {
     }
 
     public Mono<List<Repertorio>> obtenerRepertorios(String filtro, Integer cantidad) {
-        return webClient.get()
-                .uri("/repertorios")
-                .retrieve()
-                .bodyToMono(Repertorio[].class)
-                .map(Arrays::asList)
-                .map(repertorios -> repertorios.stream()
-                        .filter(repertorio -> repertorio.getTipo_repertorio().equalsIgnoreCase(filtro))
-                        .limit(cantidad)
-                        .toList());
+        Mono<List<Repertorio>> repertor = null;
+        try {
+            repertor = webClient.get()
+                    .uri("/repertorios")
+                    .retrieve()
+                    .bodyToMono(Repertorio[].class)
+                    .map(Arrays::asList)
+                    .map(repertorios -> repertorios.stream()
+                            .filter(repertorio -> repertorio.getTipo_repertorio().equalsIgnoreCase(filtro))
+                            .limit(cantidad)
+                            .toList());
+
+            return repertor;
+
+        } catch (Exception e){
+            return Mono.error(e);
+        }
     }
 
 }

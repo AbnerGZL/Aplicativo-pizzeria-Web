@@ -40,10 +40,10 @@ public class HomeController {
                 }
             }
         }
-        Mono<List<Repertorio>> repertoriosMonoPizzas = repertorioService.obtenerRepertorios("Pizzas", 8);
+        Mono<List<Repertorio>> repertoriosMonoPizzas = repertorioService.obtenerRepertorios("pizzas", 8);
         List<Repertorio> repertoriosPizzas = repertoriosMonoPizzas.block();
 
-        Mono<List<Repertorio>> repertoriosMonoOferta = repertorioService.obtenerRepertorios("Oferta", 8);
+        Mono<List<Repertorio>> repertoriosMonoOferta = repertorioService.obtenerRepertorios("oferta", 8);
         List<Repertorio> repertoriosOfertas = repertoriosMonoOferta.block();
         model.addAttribute("pizzas", repertoriosPizzas);
         model.addAttribute("ofertas", repertoriosOfertas);

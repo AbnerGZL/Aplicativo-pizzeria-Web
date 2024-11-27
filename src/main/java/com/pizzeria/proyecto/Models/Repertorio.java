@@ -12,4 +12,15 @@ public class Repertorio {
     private String fecha_fin;
     private String tipo_repertorio;
     private String imagen;
+
+    public Repertorio(int id_repertorio, String titulo, String descripcion, String precio, String fecha_inic, String fecha_fin, String imagen, String tipo_repertorio) {
+        this.id_repertorio = id_repertorio;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.fecha_inic = fecha_inic;
+        this.fecha_fin = fecha_fin;
+        this.imagen = imagen;
+        this.tipo_repertorio = tipo_repertorio;
+    }
 }

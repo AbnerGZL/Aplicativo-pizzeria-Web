@@ -269,6 +269,9 @@ button {
     background: none;
     border: none;
 }
+img {
+    object-fit: cover;
+}
 
 /*Boostrap mopdofy*/
 
@@ -755,22 +758,49 @@ footer div ul li a:hover {
     overflow-x: scroll;
     scrollbar-width: none;
 }
+.card-repertory {
+    height: 220px;
+    width: 400px;
+    border: 1px solid var(--color-gray);
+    box-sizing: border-box;
+    /* flex: 0 0 auto; */
+}
+
+.card-img-selection {
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.card-img-selection img {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    width: 100%;
+    height: 100%;
+}
+
+.card-body-selection {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.card-description {
+    overflow-y: scroll;
+    scrollbar-width: none;
+    flex: 1;
+}
 .car-button a {
     flex: 0 0 auto;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px 10px;
     margin-left: 5px;
     margin-right: 5px;
     border-radius: 16px;
 }
 .sections-bar a{
     flex: 0 0 auto;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px 10px;
     margin-left: 5px;
     margin-right: 5px;
     border-radius: 16px;
@@ -824,6 +854,21 @@ footer div ul li a:hover {
         margin-top: 0px;
         margin-bottom: 0px;
     }
+
+    .card-img-selection{
+        width: 100%;
+    }
+    .card-repertory {
+        height: 300px;
+        width: 100% !important;
+    }
+    .card-img-selection{
+        height: 100px;
+    }
+    .card-body-selection {
+        width: 100%;
+        height: calc(100% - 300px);
+    }
 }
 @media screen and (max-width: 457px) {
     .banner-footer {
@@ -851,6 +896,26 @@ footer div ul li a:hover {
         display: none !important;
     }
 }
+@media screen and (max-width: 871px){
+    .card-img-selection{
+        width: 100%;
+    }
+    .card-repertory {
+        height: 400px;
+        width: 30%;
+    }
+    .card-img-selection{
+        height: 220px;
+    }
+    .card-img-selection img{
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 1rem;
+    }
+    .card-body-selection {
+        width: 100%;
+        height: calc(100% - 220px);
+    }
+}
 @media screen and (max-width: 767px) {
     #pizzas div div {
         scrollbar-width: auto !important;
@@ -860,6 +925,16 @@ footer div ul li a:hover {
     }
     .ofert-container {
         flex-wrap: wrap;
+    }
+    .card-repertory {
+        height: 400px;
+        width: 45%;
+    }
+    .card-img-selection{
+        height: 220px;
+    }
+    .card-body-selection {
+        height: calc(100% - 220px);
     }
 }
 @media screen and (max-width: 767px) {
