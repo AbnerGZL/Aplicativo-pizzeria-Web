@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
     public String UnauthorizedException(Exception e, Model model) {
         e.printStackTrace();
         model.addAttribute("error", "Credenciales incorrectas");
-        return "login";
+        return "redirect:/";
     }
 }
 
