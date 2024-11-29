@@ -17,7 +17,7 @@ public class RepertorioService {
         this.webClient = webClient;
     }
 
-    public Mono<List<Repertorio>> obtenerRepertorios(String filtro, Integer cantidad) {
+    public Mono<List<Repertorio>> obtenerRepertorios(String filtro) {
         Mono<List<Repertorio>> repertor = null;
         try {
             repertor = webClient.get()
@@ -27,7 +27,7 @@ public class RepertorioService {
                     .map(Arrays::asList)
                     .map(repertorios -> repertorios.stream()
                             .filter(repertorio -> repertorio.getTipo_repertorio().equalsIgnoreCase(filtro))
-                            .limit(cantidad)
+//                            .limit(cantidad)
                             .toList());
 
             return repertor;

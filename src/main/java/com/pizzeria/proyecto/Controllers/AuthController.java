@@ -8,6 +8,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,27 +21,34 @@ public class AuthController {
     private final SesionService sesionService;
     private final ClienteService clienteService;
 
+    public static final String id = "id";
+    public static final String username = "username";
+    public static final String correo = "correo";
+    public static final String telefono = "telefono";
+    public static final String contrasena = "contrasena";
+
     @PostMapping("login")
+    @NonNull
     public String login(@ModelAttribute LoginRequest loginRequest, Model model, HttpServletResponse httpServletResponse, HttpSession session) {
-        if (loginRequest != null) {
+        if (null != loginRequest) {
             if (sesionService.Login(loginRequest, httpServletResponse).equals(true)) {
-                session.setAttribute("id", clienteService.getCliente(loginRequest.getUsuario().toString()).block().getId_cliente());
-                session.setAttribute("username", loginRequest.getUsuario());
-                session.setAttribute("correo", clienteService.getCliente(loginRequest.getUsuario().toString()).block().getCorreo());
-                session.setAttribute("telefono", clienteService.getCliente(loginRequest.getUsuario().toString()).block().getTelefono());
-                session.setAttribute("contrasena", loginRequest.getContrasena());
+                session.setAttribute(id, clienteService.getCliente(loginRequest.getUsuario()).block().getId_cliente());
+                session.setAttribute(username, loginRequest.getUsuario());
+                session.setAttribute(correo, clienteService.getCliente(loginRequest.getUsuario()).block().getCorreo());
+                session.setAttribute(telefono, clienteService.getCliente(loginRequest.getUsuario()).block().getTelefono());
+                session.setAttribute(contrasena, loginRequest.getContrasena());
 
                 return "redirect:/user";
             } else {
                 model.addAttribute("error", "Credenciales incorrectas");
-                model.addAttribute("username", loginRequest.getUsuario());
-                model.addAttribute("contrasena", loginRequest.getContrasena());
+                model.addAttribute(username, loginRequest.getUsuario());
+                model.addAttribute(contrasena, loginRequest.getContrasena());
                 return "Login";
             }
         } else {
             model.addAttribute("error", "Fallo en el ingreso de datos");
-            model.addAttribute("username", loginRequest.getUsuario());
-            model.addAttribute("contrasena", loginRequest.getContrasena());
+            model.addAttribute(username, loginRequest.getUsuario());
+            model.addAttribute(contrasena, loginRequest.getContrasena());
             return "Login";
         }
     }
@@ -96,7 +104,7 @@ public class AuthController {
                 session.setAttribute("username", cliente.getUsuario());
                 session.setAttribute("correo", cliente.getCorreo());
                 session.setAttribute("telefono", cliente.getTelefono());
-                session.setAttribute("contrasena", cliente.getContrasena());
+                session.setAttribute(contrasena, cliente.getContrasena());
 
                 return "redirect:/user";
 
@@ -106,7 +114,7 @@ public class AuthController {
                 model.addAttribute("username", cliente.getUsuario());
                 model.addAttribute("correo", cliente.getCorreo());
                 model.addAttribute("telefono", cliente.getTelefono());
-                model.addAttribute("contrasena", cliente.getContrasena());
+                model.addAttribute(contrasena, cliente.getContrasena());
                 return "Register";
             }
 
@@ -116,7 +124,7 @@ public class AuthController {
             model.addAttribute("username", cliente.getUsuario());
             model.addAttribute("correo", cliente.getCorreo());
             model.addAttribute("telefono", cliente.getTelefono());
-            model.addAttribute("contrasena", cliente.getContrasena());
+            model.addAttribute(contrasena, cliente.getContrasena());
             return "Register";
         }
     }

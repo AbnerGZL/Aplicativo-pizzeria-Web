@@ -1,32 +1,31 @@
 package com.pizzeria.proyecto.Controllers;
 
 import com.pizzeria.proyecto.Models.Repertorio;
+import com.pizzeria.proyecto.Models.RepertorioDetalle;
+import com.pizzeria.proyecto.Service.RepertorioDetalleService;
 import com.pizzeria.proyecto.Service.RepertorioService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.Map;
-
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")
+@RequiredArgsConstructor
 public class HomeController {
 
     private final RepertorioService repertorioService;
-
-    public HomeController(RepertorioService repertorioService) {
-        this.repertorioService = repertorioService;
-    }
+    private final RepertorioDetalleService repertorioDetalleService;
 
     @GetMapping
     public String index(Model model, HttpServletRequest request) {
@@ -40,15 +39,16 @@ public class HomeController {
                 }
             }
         }
-        Mono<List<Repertorio>> repertoriosMonoPizzas = repertorioService.obtenerRepertorios("pizzas", 8);
+        Mono<List<Repertorio>> repertoriosMonoPizzas = repertorioService.obtenerRepertorios("pizzas");
         List<Repertorio> repertoriosPizzas = repertoriosMonoPizzas.block();
 
-        Mono<List<Repertorio>> repertoriosMonoOferta = repertorioService.obtenerRepertorios("oferta", 8);
+        Mono<List<Repertorio>> repertoriosMonoOferta = repertorioService.obtenerRepertorios("ofertas");
         List<Repertorio> repertoriosOfertas = repertoriosMonoOferta.block();
         model.addAttribute("pizzas", repertoriosPizzas);
         model.addAttribute("ofertas", repertoriosOfertas);
         model.addAttribute("locate", locate);
         return "Home";
+
     }
 
     @GetMapping("/{categoria}")
@@ -70,7 +70,7 @@ public class HomeController {
         String filtro = categorias.get(categoria).get("filtro");
         String titulo = categorias.get(categoria).get("titulo");
 
-        Mono<List<Repertorio>> repertoriosMono = repertorioService.obtenerRepertorios(filtro, 6);
+        Mono<List<Repertorio>> repertoriosMono = repertorioService.obtenerRepertorios(filtro);
         List<Repertorio> repertorios = repertoriosMono.block();
 
         model.addAttribute("titulo", titulo);
@@ -107,13 +107,66 @@ public class HomeController {
         return "Car";
     }
 
-    @GetMapping("selector_product")
-    public String selectorProductos(){
+    @GetMapping("selector_products")
+    public String selectorProductos(
+            @RequestParam("product") String product,
+            @RequestParam("type") String type,
+            Model model
+    ) {
+        String producto = new String(Base64.getUrlDecoder().decode(product), StandardCharsets.UTF_8);
+        String tipo = new String(Base64.getUrlDecoder().decode(type), StandardCharsets.UTF_8);
+
+        Mono<List<Repertorio>> selection1 = repertorioService.obtenerRepertorios(producto);
+        List<Repertorio> productos = selection1.block();
+
+        model.addAttribute("productos",productos);
+        model.addAttribute("type",tipo);
+
         return "Selector-productos";
     }
 
-    @GetMapping("selector")
-    public String selector(){
+    @PostMapping("selector_products")
+    public String selectProduct(
+            @RequestParam("producto") String producto,
+            @RequestParam("detalle") String detalle,
+            RedirectAttributes redirectAttributes) {
+
+
+            System.out.println(producto);
+            System.out.println(detalle);
+
+
+//        redirectAttributes.addFlashAttribute("detalle", detalle);
+//        redirectAttributes.addFlashAttribute("producto", producto);
+            return "redirect:/selector";
+    }
+
+
+    @GetMapping("/selector")
+    public String selector(
+            @RequestParam("id") String id,
+            @RequestParam("title") String title,
+            @RequestParam("price") String price,
+            @RequestParam("img") String img,
+            Model model
+    ) {
+        Mono<List<RepertorioDetalle>> repertorio = repertorioDetalleService.getDetalles(id);
+        List<RepertorioDetalle> detalles = repertorio.block();
+
+        String[][] detallesCodificados = detalles.stream()
+                .map(detalle -> new String[]{
+                        Base64.getUrlEncoder().encodeToString((detalle.getProducto() + "s").getBytes(StandardCharsets.UTF_8)),
+                        Base64.getUrlEncoder().encodeToString(detalle.getDetalle().getBytes(StandardCharsets.UTF_8))
+                })
+                .toArray(String[][]::new);
+
+
+        model.addAttribute("encodes", detallesCodificados);
+        model.addAttribute("rpdetalle", repertorio.block());
+        model.addAttribute("id", id);
+        model.addAttribute("title", title);
+        model.addAttribute("price", price);
+        model.addAttribute("img", img);
         return "Selector";
     }
 }

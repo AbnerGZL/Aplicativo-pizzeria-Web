@@ -122,7 +122,7 @@ try {
         fetch(`https://us1.locationiq.com/v1/search?key=pk.b399cb145a3bfd1a341b631e4f4f4db7&q=${query}&format=json&`)
             .then(response => response.json())
             .then(data => updateLocationList(data))
-            .catch(error => console.error('Error fetching location:', error));
+            // .catch(error => console.error('Error fetching location:', error));
     }
 
     function updateLocationList(locations) {
