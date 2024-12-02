@@ -30,10 +30,12 @@ public class SesionService extends SesionRepository {
     public Boolean Logout(HttpServletResponse response) {
         try {
             Cookie accessTokenCookie = new Cookie("access_token", null);
+            accessTokenCookie.setSecure(true);
             accessTokenCookie.setMaxAge(0);
             accessTokenCookie.setPath("/");
 
             Cookie refreshTokenCookie = new Cookie("refresh_token", null);
+            refreshTokenCookie.setSecure(true);
             refreshTokenCookie.setMaxAge(0);
             refreshTokenCookie.setPath("/");
 

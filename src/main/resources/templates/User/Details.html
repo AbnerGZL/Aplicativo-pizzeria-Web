@@ -60,7 +60,7 @@
                 <div class="mx-3 mx-3 col-11 col-sm-11 col-md-6 col-lg-6 col-xl-6 col-xxl-6 disappear" id="edit-profile">
                     <form th:action="@{/user/edit}" method="POST">
                         <h5>Editar datos</h5>
-                        <input type="hidden" id="id_cliente" name="id_cliente" th:value="${sessionAttributes['id'] != null ? sessionAttributes['id'] : 'no disponible' }" readonly>
+                        <input type="hidden" id="occult" name="id_cliente" th:value="${sessionAttributes['id'] != null ? sessionAttributes['id'] : 'no disponible' }"readonly>
                         <hr>
                         <div class="grid w-100 rounded-3 font-roboto">
                             <div class="grid mb-2">

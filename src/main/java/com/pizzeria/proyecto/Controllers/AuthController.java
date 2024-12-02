@@ -14,6 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
@@ -28,8 +32,7 @@ public class AuthController {
     public static final String contrasena = "contrasena";
 
     @PostMapping("login")
-    @NonNull
-    public String login(@ModelAttribute LoginRequest loginRequest, Model model, HttpServletResponse httpServletResponse, HttpSession session) {
+    public String login(@ModelAttribute LoginRequest loginRequest, @RequestParam(required = false) String redirect, @RequestParam(required = false) String content, Model model, HttpServletResponse httpServletResponse, HttpSession session) {
         if (null != loginRequest) {
             if (sesionService.Login(loginRequest, httpServletResponse).equals(true)) {
                 session.setAttribute(id, clienteService.getCliente(loginRequest.getUsuario()).block().getId_cliente());
@@ -38,17 +41,31 @@ public class AuthController {
                 session.setAttribute(telefono, clienteService.getCliente(loginRequest.getUsuario()).block().getTelefono());
                 session.setAttribute(contrasena, loginRequest.getContrasena());
 
-                return "redirect:/user";
+                if(content!=null) {
+                    String decode = (new String(Base64.getUrlDecoder().decode(content), StandardCharsets.UTF_8));
+//                    System.out.println("en el login: "+decode);
+                    return "redirect:/" + redirect+"?"+decode;
+                }
+//                return "redirect:/";
+                return "redirect:/";
             } else {
                 model.addAttribute("error", "Credenciales incorrectas");
                 model.addAttribute(username, loginRequest.getUsuario());
                 model.addAttribute(contrasena, loginRequest.getContrasena());
+                if (redirect!=null&&content!=null){
+                    model.addAttribute("redirect",redirect);
+                    model.addAttribute("content",content);
+                }
                 return "Login";
             }
         } else {
             model.addAttribute("error", "Fallo en el ingreso de datos");
             model.addAttribute(username, loginRequest.getUsuario());
             model.addAttribute(contrasena, loginRequest.getContrasena());
+            if (redirect!=null&&content!=null){
+                model.addAttribute("redirect",redirect);
+                model.addAttribute("content",content);
+            }
             return "Login";
         }
     }
@@ -106,7 +123,7 @@ public class AuthController {
                 session.setAttribute("telefono", cliente.getTelefono());
                 session.setAttribute(contrasena, cliente.getContrasena());
 
-                return "redirect:/user";
+                return "redirect:/";
 
             } else {
                 System.out.println("estacion 2");

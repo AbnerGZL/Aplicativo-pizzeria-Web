@@ -7,6 +7,7 @@ import com.pizzeria.proyecto.Service.RepertorioService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.http.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import reactor.core.publisher.Mono;
 
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,6 +41,7 @@ public class HomeController {
                 }
             }
         }
+
         Mono<List<Repertorio>> repertoriosMonoPizzas = repertorioService.obtenerRepertorios("pizzas");
         List<Repertorio> repertoriosPizzas = repertoriosMonoPizzas.block();
 
@@ -51,7 +54,7 @@ public class HomeController {
 
     }
 
-    @GetMapping("/{categoria}")
+    @GetMapping("{categoria}")
     public String mostrarRepertorio(@PathVariable("categoria") String categoria, Model model) {
         Map<String, Map<String, String>> categorias = Map.of(
                 "oferts", Map.of("filtro", "ofertas", "titulo", "Promociones solo para ti"),
@@ -75,11 +78,12 @@ public class HomeController {
 
         model.addAttribute("titulo", titulo);
         model.addAttribute("repertorios", repertorios);
+        model.addAttribute("category", categoria);
 
         return "Repertory";
     }
 
-    @PostMapping("/locate")
+    @PostMapping("locate")
     public String locate(@RequestParam("locate") String locate, @RequestParam("change") String change, HttpServletResponse response) {
         if(locate != null) {
             try {
@@ -111,6 +115,11 @@ public class HomeController {
     public String selectorProductos(
             @RequestParam("product") String product,
             @RequestParam("type") String type,
+            @RequestParam("id") String id,
+            @RequestParam("title") String title,
+            @RequestParam("price") String price,
+            @RequestParam("img") String img,
+            @RequestParam("category") String category,
             Model model
     ) {
         String producto = new String(Base64.getUrlDecoder().decode(product), StandardCharsets.UTF_8);
@@ -121,33 +130,23 @@ public class HomeController {
 
         model.addAttribute("productos",productos);
         model.addAttribute("type",tipo);
+        model.addAttribute("id",id);
+        model.addAttribute("title",title);
+        model.addAttribute("price",price);
+        model.addAttribute("img",img);
+        model.addAttribute("category",category);
 
         return "Selector-productos";
     }
 
-    @PostMapping("selector_products")
-    public String selectProduct(
-            @RequestParam("producto") String producto,
-            @RequestParam("detalle") String detalle,
-            RedirectAttributes redirectAttributes) {
 
-
-            System.out.println(producto);
-            System.out.println(detalle);
-
-
-//        redirectAttributes.addFlashAttribute("detalle", detalle);
-//        redirectAttributes.addFlashAttribute("producto", producto);
-            return "redirect:/selector";
-    }
-
-
-    @GetMapping("/selector")
+    @GetMapping("selector")
     public String selector(
             @RequestParam("id") String id,
             @RequestParam("title") String title,
             @RequestParam("price") String price,
             @RequestParam("img") String img,
+            @RequestParam("category") String category,
             Model model
     ) {
         Mono<List<RepertorioDetalle>> repertorio = repertorioDetalleService.getDetalles(id);
@@ -167,6 +166,36 @@ public class HomeController {
         model.addAttribute("title", title);
         model.addAttribute("price", price);
         model.addAttribute("img", img);
+        model.addAttribute("category", category);
         return "Selector";
+    }
+
+    @GetMapping("selection")
+    public String ProventaSelect(@RequestParam Map<String, String> parametros, HttpSession sesion, Model model){
+        String id = (String) sesion.getAttribute("id");
+        if (id != null) {
+            parametros.forEach((clave, valor) -> {
+                System.out.println("Clave: " + clave + ", Valor: " + valor);
+            });
+            return "redirect:/car";
+        }
+        // Convertir los parámetros para la redirección
+        String redirectQuery = parametros.entrySet()
+                .stream()
+                .map(entry ->
+                        URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8) + "=" +
+                        URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8))
+                .reduce((param1, param2) -> param1 + "&" + param2)
+                .orElse("");
+
+        String encodedcontent = Base64.getUrlEncoder().encodeToString(redirectQuery.getBytes(StandardCharsets.UTF_8));
+//        System.out.println("en el selection:"+redirectQuery);
+//        System.out.println("en el selection:"+encodedcontent);
+//        System.out.println("en el selection: selection");
+
+        model.addAttribute("error", "inicie sesión antes de agregar su pedido al carrito");
+        model.addAttribute("redirect", "selection");
+        model.addAttribute("content", encodedcontent);
+        return "login";
     }
 }

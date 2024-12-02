@@ -6,13 +6,6 @@
     <title>Iniciar Sesión</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <script>
-        // Comprobación en el cliente para evitar mostrar la página si el usuario ya está autenticado
-        const isAuthenticated = document.cookie.includes("access_token");
-        if (isAuthenticated) {
-            window.location.href = "/user";
-        }
-    </script>
 </head>
 <body>
 <!--Pantalla de carga-->
@@ -41,7 +34,7 @@
                 <h2 class="col-12 mb-3 text-center">Iniciar Sesión</h2>
             </div>
             <div class="text-start">
-                <form method="POST" th:action="@{/login}">
+                <form method="POST" th:action="@{${'/login'+(redirect!=null&&content!=null? '?redirect='+redirect+'&content='+content : '')}}">
                     <div class="font-roboto size-14">
                         <p>Eres un usuario nuevo? <a th:href="@{/register}" class="text-decoration-underline text-primary">Registrarse</a></p>
                     </div>

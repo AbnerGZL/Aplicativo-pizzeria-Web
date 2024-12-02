@@ -33,7 +33,8 @@ public class RepertorioService {
             return repertor;
 
         } catch (Exception e){
-            return Mono.error(e);
+            System.out.println(e.getMessage());
+            return Mono.empty();
         }
     }
 

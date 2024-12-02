@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Combos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
@@ -26,24 +27,24 @@
             </div>
 
             <div class="my-4">
-                <div class="d-flex flex-wrap justify-content-evenly">
+                <div class="d-flex flex-wrap justify-content-evenly" id="blocks-content">
                     <div th:if="${#lists.isEmpty(repertorios)}" class="col-12 text-center">
                         <p>Sin registros por ahora</p>
                     </div>
                         
-                        <div th:each="repertorio : ${repertorios}" class="d-flex justify-content-center align-items-center rounded-4 card-repertory p-0 m-2">
+                        <div th:each="repertorio, iterStat : ${repertorios}" class="d-flex justify-content-center align-items-center rounded-4 card-repertory p-0 m-2">
                             <div class="d-flex flex-wrap justify-content-center align-items-center col-12 h-100">
-                                <a th:href="@{/selector}" id="rp-img" class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 card-img-selection">
+                                <div id="rp-img" class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 card-img-selection">
                                     <img th:src="@{${repertorio.imagen}}" alt=".">
-                                </a>
-                                <div class="p-2 col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 card-body-selection">
+                                </div>
+                                <div class="p-3 col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 card-body-selection">
                                     <div>
                                         <h5 id="rp-title" class="card-title mb-2" th:text="${repertorio.titulo}"></h5>
                                     </div>
                                     <div class="card-description card-text size-14 mb-2" th:text="${repertorio.descripcion}"></div>
                                     <p class="text-muted">s/.<strong id="rp-price" th:text="${repertorio.precio}"></strong></p>
                                     <div>
-                                        <a th:href="@{/selector(id=${repertorio.id_repertorio},title=${repertorio.titulo},price=${repertorio.precio},img=${repertorio.imagen},category=${repertorio.tipo_repertorio})}" class="btn btn-dark w-100 font-fredoka size-14">Seleccionar</a>
+                                        <a th:href="@{/selector(id=${repertorio.id_repertorio},title=${repertorio.titulo},price=${repertorio.precio},img=${repertorio.imagen},category=${category})}" class="btn btn-dark w-100 font-fredoka size-14">Seleccionar</a>
                                     </div>
                                 </div>
                             </div>

@@ -8,6 +8,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
@@ -28,23 +29,22 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         // Agregar encabezados para evitar la caché en rutas protegidas
         if (isAuthenticated) {
-            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
-            response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-            response.setDateHeader("Expires", 0); // Proxies
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            response.setHeader("Pragma", "no-cache");
+            response.setDateHeader("Expires", 0);
         }
 
         // Redirigir al usuario a la ruta protegida si intenta acceder a /login o /register mientras está autenticado
         if (isAuthenticated && (request.getRequestURI().equals("/login") || request.getRequestURI().equals("/register"))) {
-            response.sendRedirect("/user"); // Redirige a la ruta protegida
+            response.sendRedirect("/user");
             return false;
         }
 
         // Acceso a las rutas públicas permitidas sin autenticación
         if (!isAuthenticated && (request.getRequestURI().startsWith("/login") || request.getRequestURI().startsWith("/register"))) {
-            // Configura los encabezados para evitar que el navegador almacene en caché la página
-            response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate"); // HTTP 1.1
-            response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-            response.setDateHeader("Expires", 0); // Proxies
+            response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+            response.setHeader("Pragma", "no-cache");
+            response.setDateHeader("Expires", 0);
             return true;
         }
 

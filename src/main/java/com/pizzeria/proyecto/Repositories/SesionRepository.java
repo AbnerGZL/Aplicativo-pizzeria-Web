@@ -55,6 +55,8 @@ public class SesionRepository {
                 // Opcional: Configura las cookies como HttpOnly y con ruta
                 accessTokenCookie.setHttpOnly(true);
                 refreshTokenCookie.setHttpOnly(true);
+                accessTokenCookie.setSecure(true);
+                refreshTokenCookie.setSecure(true);
                 accessTokenCookie.setPath("/");
                 refreshTokenCookie.setPath("/");
 
