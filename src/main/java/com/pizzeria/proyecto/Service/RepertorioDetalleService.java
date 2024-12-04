@@ -16,7 +16,7 @@ public class RepertorioDetalleService extends RepertorioDetalleRepository {
         super(webClient);
     }
 
-    public Mono<List<RepertorioDetalle>> getDetalles(String id) {
+    public Mono<List<RepertorioDetalle>> getDetalles(Integer id) {
         if (id != null) {
             return get()
                     .map(detalles ->

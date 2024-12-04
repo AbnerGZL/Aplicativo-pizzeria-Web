@@ -59,7 +59,7 @@ public class SesionService extends SesionRepository {
                 return "hecho";
             }
             else {
-                return "Hubo un problema al inciar sesión";
+                return "Hubo un problema al registrarse";
             }
 
         }

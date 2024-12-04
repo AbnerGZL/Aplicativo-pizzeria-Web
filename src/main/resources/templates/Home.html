@@ -23,11 +23,11 @@
                         <h1 class="p-2 cursor-null mx-4">Un lugar cálido para probar cosas nuevas con sabor al hogar</h1>
                     </div>
                     <div class="d-flex align-items-center my-3 col-md-5 col-xl-5 col-lg-5 col-sm-6 col-6 justify-content-evenly flex-wrap">
-                        <div class="d-flex mx-md-4 mx-lg-4 mx-xl-1 mx-sm-4 mx-4 my-3">
+                        <div th:if="${locate!=null}" class="d-flex mx-md-4 mx-lg-4 mx-xl-1 mx-sm-4 mx-4 my-3">
                             <a class="font-fredoka size-14 fw-semibold py-3 px-4 rounded-4 banner-button-1 text-pizza-red" th:href="@{/oferts}">Ver Ofertas</a>
                             <a class="font-fredoka size-14 fw-semibold p-3 rounded-4 banner-button-outline-1" href="#">Ver Ofertas</a>
                         </div>
-                        <div class="d-flex mx-md-4 mx-lg-4 mx-xl-1 mx-sm-4 mx-4 my-3">
+                        <div th:if="${locate==null}" class="d-flex mx-md-4 mx-lg-4 mx-xl-1 mx-sm-4 mx-4 my-3">
                             <a class="font-fredoka size-14 fw-semibold py-3 px-4 rounded-4 banner-button-2 text-pizza-dark" href="#locate">Ingresar ubicación</a>
                             <a class="font-fredoka size-14 fw-semibold p-3 rounded-4 banner-button-outline-2" href="#">Ingresar ubicació</a>
                         </div>
@@ -309,9 +309,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="d-flex mb-4 justify-content-center size-12 font-fredoka fw-semibold">
-                        <a href="#" class="btn-pizza-yellow">Ver más ofertas</a>
                     </div>
                 </div>
             </section>

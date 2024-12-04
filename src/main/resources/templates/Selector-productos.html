@@ -55,15 +55,19 @@
                             <img th:src="@{${producto.imagen}}" alt=".">
                         </div>
                         <div class="p-3 col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 card-body-selection">
-
                                 <div>
                                     <h5 class="card-title mb-2" th:id="${'title-'+iterStat.count}" th:text="${producto.titulo}"></h5>
                                 </div>
                                 <div class="card-description card-text size-14 mb-2" th:text="${producto.descripcion}"></div>
                                 <div class="form-style mb-2" th:id="${'type-'+iterStat.count}" th:text="${type}"></div>
-                                <div>
-                                    <a th:href="@{/selector(id=${id},title=${title},price=${price},img=${img},category=${category})}" class="btn btn-dark w-100 font-fredoka size-14" th:id="${'select-'+iterStat.count}">Seleccionar</a>
+
+                                <div th:each="detalle : ${detalles}">
+                                    <div th:each="proprima : ${proprimas}" th:if="${proprima.tamano == type && proprima.nombre == producto.titulo.toLowerCase() || detalle.id_repertorio == producto.id_repertorio}">
+                                        <h5 th:text="${proprima.id_proprima}"></h5>
+                                        <a th:href="@{/selector(id=${id},title=${title},price=${price},img=${img},category=${category})}" class="btn btn-dark w-100 font-fredoka size-14" th:id="${'select-'+iterStat.count}">Seleccionar</a>
+                                    </div>
                                 </div>
+
 <!--                                <form th:action="@{/selector_products()}" method="POST">-->
 <!--                                    <input type="hidden" name="producto" th:value="${producto.titulo}">-->
 <!--                                    <select name="detalle" class="w-100 mb-2 form-style cursor-point">-->

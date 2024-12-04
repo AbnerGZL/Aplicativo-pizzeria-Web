@@ -36,7 +36,7 @@
             <div class="text-start">
                 <form method="POST" th:action="@{${'/login'+(redirect!=null&&content!=null? '?redirect='+redirect+'&content='+content : '')}}">
                     <div class="font-roboto size-14">
-                        <p>Eres un usuario nuevo? <a th:href="@{/register}" class="text-decoration-underline text-primary">Registrarse</a></p>
+                        <p>Eres un usuario nuevo? <a th:href="@{${'/register'+(redirect!=null&&content!=null? '?redirect='+redirect+'&content='+content : '')}}" class="text-decoration-underline text-primary">Registrarse</a></p>
                     </div>
                     <div th:class="${error != null? 'p-3 error font-fredoka' : 'disabled'}" th:text="${error != null? error : ''}">Error</div>
                     <div class="my-2">

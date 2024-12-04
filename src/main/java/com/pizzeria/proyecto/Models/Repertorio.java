@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Repertorio {
-    private int id_repertorio;
+    private Integer id_repertorio;
     private String titulo;
     private String descripcion;
     private String precio;
@@ -13,7 +13,7 @@ public class Repertorio {
     private String tipo_repertorio;
     private String imagen;
 
-    public Repertorio(int id_repertorio, String titulo, String descripcion, String precio, String fecha_inic, String fecha_fin, String imagen, String tipo_repertorio) {
+    public Repertorio(Integer id_repertorio, String titulo, String descripcion, String precio, String fecha_inic, String fecha_fin, String imagen, String tipo_repertorio) {
         this.id_repertorio = id_repertorio;
         this.titulo = titulo;
         this.descripcion = descripcion;

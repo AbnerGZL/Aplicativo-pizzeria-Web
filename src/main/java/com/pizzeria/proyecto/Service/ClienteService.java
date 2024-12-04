@@ -17,10 +17,10 @@ public class ClienteService extends ClienteRepository {
         if (nombre != null) {
             return get()
                     .flatMap(clientes ->
-                        Mono.justOrEmpty(clientes.stream()
-                                .filter(cliente -> cliente.getUsuario().equals(nombre))
-                                .findFirst()
-                        ));
+                            Mono.justOrEmpty(clientes.stream()
+                                    .filter(cliente -> cliente.getUsuario().equals(nombre))
+                                    .findFirst()
+                            ));
         } else {
             return Mono.empty();
         }

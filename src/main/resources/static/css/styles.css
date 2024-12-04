@@ -393,7 +393,15 @@ img {
     transition: all 400ms;
     filter: invert(100%);
 }
+.btn-effect-dark:focus svg{
+    transition: all 400ms;
+    filter: invert(100%);
+}
 .btn-effect-dark:hover img{
+    transition: all 400ms;
+    filter: invert(100%);
+}
+.btn-effect-dark:hover svg{
     transition: all 400ms;
     filter: invert(100%);
 }

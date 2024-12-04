@@ -111,7 +111,7 @@ public class SesionRepository {
                 Cookie accessTokenCookie = new Cookie("access_token", accessToken.get());
                 Cookie refreshTokenCookie = new Cookie("refresh_token", refreshToken.get());
 
-                // Opcional: Configura las cookies como HttpOnly y con ruta
+                // Configuración de las cookies
                 accessTokenCookie.setHttpOnly(true);
                 accessTokenCookie.setSecure(true);
                 refreshTokenCookie.setHttpOnly(true);

@@ -46,7 +46,7 @@ public class AuthController {
 //                    System.out.println("en el login: "+decode);
                     return "redirect:/" + redirect+"?"+decode;
                 }
-//                return "redirect:/";
+
                 return "redirect:/";
             } else {
                 model.addAttribute("error", "Credenciales incorrectas");
@@ -96,7 +96,7 @@ public class AuthController {
     }
 
     @GetMapping("register")
-    public String registerPage(HttpServletRequest request) {
+    public String registerPage(HttpServletRequest request, Model model, @RequestParam(required = false) String redirect, @RequestParam(required = false) String content) {
         boolean isAuthenticated = false;
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
@@ -107,41 +107,54 @@ public class AuthController {
                 }
             }
         }
-
+        if (redirect!=null&&content!=null){
+            model.addAttribute("redirect",redirect);
+            model.addAttribute("content",content);
+        }
         return isAuthenticated? "redirect:/user" : "register";
     }
 
     @PostMapping("register")
-    public String register(@ModelAttribute Cliente cliente, Model model,  HttpServletResponse response, HttpSession session) {
+    public String register(@ModelAttribute Cliente cliente, Model model,  HttpServletResponse response, HttpSession session, @RequestParam(required = false) String redirect, @RequestParam(required = false) String content) {
         if (cliente != null) {
             String result = sesionService.Register(cliente, response);
             if (result.equals("hecho")) {
-                System.out.println("estacion 1");
                 session.setAttribute("id", clienteService.getCliente(cliente.getUsuario().toString()).block().getId_cliente());
                 session.setAttribute("username", cliente.getUsuario());
                 session.setAttribute("correo", cliente.getCorreo());
                 session.setAttribute("telefono", cliente.getTelefono());
                 session.setAttribute(contrasena, cliente.getContrasena());
 
+                if(content!=null) {
+                    String decode = (new String(Base64.getUrlDecoder().decode(content), StandardCharsets.UTF_8));
+                    return "redirect:/" + redirect+"?"+decode;
+                }
+
                 return "redirect:/";
 
             } else {
-                System.out.println("estacion 2");
                 model.addAttribute("error", result);
                 model.addAttribute("username", cliente.getUsuario());
                 model.addAttribute("correo", cliente.getCorreo());
                 model.addAttribute("telefono", cliente.getTelefono());
                 model.addAttribute(contrasena, cliente.getContrasena());
+                if (redirect!=null&&content!=null){
+                    model.addAttribute("redirect",redirect);
+                    model.addAttribute("content",content);
+                }
                 return "Register";
             }
 
         } else {
-            System.out.println("estacion 3");
             model.addAttribute("error", "Fallo en el envío de datos");
             model.addAttribute("username", cliente.getUsuario());
             model.addAttribute("correo", cliente.getCorreo());
             model.addAttribute("telefono", cliente.getTelefono());
             model.addAttribute(contrasena, cliente.getContrasena());
+            if (redirect!=null&&content!=null){
+                model.addAttribute("redirect",redirect);
+                model.addAttribute("content",content);
+            }
             return "Register";
         }
     }

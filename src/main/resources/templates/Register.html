@@ -34,7 +34,7 @@
             <h2 class="col-12 m-3 text-center">Registrarse</h2>
         </div>
         <div class="text-start">
-            <form method="POST" th:action="@{/register}">
+            <form method="POST" th:action="@{${'/register'+(redirect!=null&&content!=null? '?redirect='+redirect+'&content='+content : '')}}">
                 <div th:class="${error != null? 'p-3 error font-fredoka' : 'disabled'}" th:text="${error != null? error : ''}">Error</div>
                 <div class="my-2">
                     <label for="usuario" class="my-2 size-18">Nombre de usuario</label>

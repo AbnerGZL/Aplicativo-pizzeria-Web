@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => {
                 loader.style.opacity="0%";
                 loader.style.pointerEvents="none";
-            }, 400);
+            }, 350);
         }catch (e){}
 
         //Bloquear entrada de input en details
@@ -24,9 +24,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
         //Bloquar entrada input en selector
         try {
-            const hiddens = document.getElementById('provents').getElementsByTagName('a')
+            const hiddens = document.getElementById('provents').getElementsByTagName('a');
+            document.getElementById("repertory").addEventListener("keypress", function(e) {e.preventDefault()});
             for (let i=0; i<hiddens.length; i++) {
-                hiddens[i].querySelector('input').addEventListener("keypress", function(event) {event.preventDefault()})
+                hiddens[i].querySelector('input').addEventListener("keypress", function(event) {event.preventDefault()});
             }
         }catch (e) {}
 
@@ -64,15 +65,19 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }catch (e) {}
 
-        // Asignar id a cada texto dentro del <a> en selector
+        // Asignar id a cada texto e input dentro del <a> en selector
         try {
             const parrafos = document.getElementById('provents').getElementsByTagName('a');
 
             for (let i = 0; i < parrafos.length; i++) {
-                parrafos[i].addEventListener('click', function() {
+                parrafos[i].addEventListener('click', function(e) {
                     let objeto = JSON.parse(localStorage.getItem("objeto"));
-                    objeto[`p-user-selection-${i+1}`] = "";
-                    localStorage.setItem('objeto', JSON.stringify(objeto));
+                    if (objeto[`p-user-selection-${i+1}`] === undefined) {
+                        objeto[`p-user-selection-${i+1}`] = "";
+                        localStorage.setItem('objeto', JSON.stringify(objeto));
+                    } else {
+                        localStorage.setItem('nuevo', `p-user-selection-${i+1}`);
+                    }
                 })
                 let parrafo = parrafos[i].querySelector('p');
                 let input = parrafos[i].querySelector('input');
@@ -85,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }catch (e){}
 
         try {
-            // darle el valor del producto seleccionado al botón en selector
+            // darle el valor del producto seleccionado al botón y al input en selector
             const packages = document.getElementById("provents").getElementsByTagName('a');
             const objeto = JSON.parse(localStorage.getItem("objeto"));
             let validations = []
@@ -123,10 +128,13 @@ try {
         document.getElementById("select-"+i).addEventListener("click", function() {
             let objeto = JSON.parse(localStorage.getItem("objeto"));
             let clave = Object.keys(objeto).find(key => objeto[key] === "");
-            objeto[clave] = document.getElementById("title-"+i).textContent+" "+document.getElementById("type-"+i).textContent;
-            localStorage.setItem('objeto',JSON.stringify(objeto));
-            // localStorage.setItem("product-"+i, document.getElementById("title-"+i).textContent);
-            // localStorage.setItem("detail-"+i, document.getElementById("type-"+i).textContent);
+            if (clave === undefined){
+                objeto[localStorage.getItem("nuevo").toString()] = document.getElementById("title-"+i).textContent;
+                localStorage.setItem('objeto',JSON.stringify(objeto));
+            }else {
+                objeto[clave] = document.getElementById("title-"+i).textContent;
+                localStorage.setItem('objeto',JSON.stringify(objeto));
+            }
         })
     }
 }catch(e){}
