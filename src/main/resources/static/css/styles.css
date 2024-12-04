@@ -431,6 +431,28 @@ img {
 .btn-effect-yellow:active {
     box-shadow: 0px 0px 15px 1px var(--color-yellow);
 }
+.btn-effect-red {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: 0px solid var(--color-red);
+    outline-offset: 0px;
+    transition: all 400ms;
+}
+.btn-effect-red:hover {
+    background-color: var(--color-red) !important;
+    color: var(--color-black) !important;
+    outline: 3px solid var(--color-red);
+    outline-offset: 3px;
+}
+.btn-effect-red:focus {
+    background-color: var(--color-red) !important;
+    color: var(--color-black) !important;
+    outline: 3px solid var(--color-red);
+    outline-offset: 3px;
+}
+
+
 .banner {
     max-height: 420px;
     display: flex;
@@ -638,11 +660,15 @@ img {
     max-height: 500px;
     min-height: 420px;
     background-color: var(--color-gray);
-    overflow: hidden;
-    overflow-y: scroll;
-    scrollbar-width: thin;
-    margin-bottom: 1rem;
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
+
+.box-orders::-webkit-scrollbar {
+    display: none;
+}
+
 #edit-profile {
     transition: all 600ms;
 }

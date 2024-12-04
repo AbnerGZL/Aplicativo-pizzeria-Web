@@ -175,10 +175,15 @@
                         </div>
 
                         <div class="carousel-pizzas d-flex mx-auto">
+                            <div th:if="${#lists.isEmpty(pizzas)}" class="col-12 text-center">
+                                <p>Sin registros por ahora</p>
+                            </div>
                             <div th:each="pizza : ${pizzas}" class="rounded-4">
                                 <div class="flip-container">
                                     <div class="front">
-                                        <img th:src="@{${pizza.imagen}}" class="img-cover rounded-4" alt="Pizza">
+                                        <img th:src="@{${pizza.imagen}}"
+                                             onerror="this.onerror=null;this.src='/images/img_default.jpeg';"
+                                             class="img-cover rounded-4" alt="Pizza">
                                     </div>
                                     <div class="back">
                                         <p th:text="${pizza.titulo}"></p>
@@ -187,8 +192,6 @@
                                 </div>
                             </div>
                         </div>
-
-
 
                         <div class="d-flex align-items-center justify-content-center p-3 col-1 arrow">
                             <a href="#" id="flecha_derecha" class="d-flex align-items-center justify-content-center p-2 rounded-5 text-pizza-dark bg-pizza-yellow arrow">
@@ -298,16 +301,21 @@
                 <div class="my-3 w-100">
                     <div class="px-3 d-flex w-100 justify-content-center align-items-center flex-wrap">
                         <div class="d-flex justify-content-evenly align-items-center py-3 px-3 col-12 ofert-container">
-
+                            <div th:if="${#lists.isEmpty(ofertas)}" class="col-12 text-center">
+                                <p>Sin registros por ahora</p>
+                            </div>
                             <div th:each="oferta : ${ofertas}" class="d-flex rounded-4 bg-pizza-gray m-2 block-ofert" style="width: 380px; height: 230px;">
                                 <div class="parte_frontal_oferta">
-                                    <img th:src="@{${oferta.imagen}}" class="img-cover rounded-4" alt="Oferta">
+                                    <img th:src="@{${oferta.imagen}}"
+                                         onerror="this.onerror=null;this.src='/images/img_default.jpeg';"
+                                         class="img-cover rounded-4" alt="Oferta">
                                 </div>
                                 <div class="parte_trasera_oferta d-flex flex-column justify-content-center align-items-center">
                                     <h5 th:text="${oferta.titulo}" class="mb-2"></h5>
                                     <a class="btn" style="background-color: #D03139; color: white">¡Pedir!</a>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="d-flex mb-4 justify-content-center size-12 font-fredoka fw-semibold">

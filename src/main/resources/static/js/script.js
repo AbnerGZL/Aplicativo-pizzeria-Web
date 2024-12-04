@@ -186,3 +186,36 @@ try {
     }
 
 }catch(e){}
+
+//eloy
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('modalDetalles');
+        const productsList = document.getElementById('productosLista');
+        const precioTotalElement = document.getElementById('precioTotal');
+        const sinProductosElement = document.getElementById('sinProductos');
+        modal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const idPedido = button.getAttribute('data-id_pedido');
+            const productosString = button.getAttribute('data-productos');
+            const precio = button.getAttribute('data-precio');
+            productsList.innerHTML = '';
+            sinProductosElement.style.display = 'none';
+            let productos = [];
+            if (productosString) {
+                productos = productosString.replace(/^\[|]$/g, '').split(', ');
+            }
+
+            if (productos.length > 0) {
+                productos.forEach(producto => {
+                    const li = document.createElement('li');
+                    li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+                    li.textContent = producto;
+                    productsList.appendChild(li);
+                });
+            } else {
+                sinProductosElement.style.display = 'block';
+            }
+
+            precioTotalElement.textContent = ` S/. ${parseFloat(precio).toFixed(2)}`;
+        });
+    });
