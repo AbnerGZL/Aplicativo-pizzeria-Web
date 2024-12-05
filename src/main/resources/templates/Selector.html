@@ -35,7 +35,6 @@
     <div class="submain">
 
         <div class="w-100 d-flex align-items-center justify-content-center h-100">
-
             <div class="card-selector shadow-sm rounded-4 col-11 col-sm-7 col-md-5 col-lg-4 col-xl-3 col-xxl-3">
                 <div class="card-img-selector">
                     <img th:src="${img}" alt="img">
@@ -53,20 +52,8 @@
                             <div th:if="${error != null}" class="d-flex justify-content-center align-content-center my-5">
                                 <h6 th:text="${error}" class="text-center"></h6>
                             </div>
-                            <div th:if="${proprima != null}">
-                                <div class="form-style rounded-2 p-2 mb-3 size-14 font-roboto rounded-3 w-100 d-flex justify-content-between align-items-center">
-                                    <div class="grid">
-                                        <p class="m-0 fw-semibold size-18" th:text="${proprima.nombre}"></p>
-                                        <span th:text="${proprima.tamano}"></span>
-                                        <input type="hidden" class="occult" th:value="${proprima.nombre}" readonly>
-                                    </div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-check-circle-fill mx-1" viewBox="0 0 16 16">
-                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                    </svg>
-                                </div>
-                            </div>
                             <div th:if="${rpdetalle != null}" th:each="detalle, iterStat : ${rpdetalle}">
-                                <a th:each="i : ${#numbers.sequence(1, detalle.unidades)}"
+                                <a th:if="${detalle.id_proprima == null}" th:each="i : ${#numbers.sequence(1, detalle.unidades)}"
                                    th:href="@{/selector_products
                                 (
                                     product=${encodes[iterStat.index][0]},
@@ -87,6 +74,22 @@
                                         <path d="M10.7083 13.8337L16.75 8.00033L10.7083 2.16699M2.25 13.8337L8.29167 8.00033L2.25 2.16699" stroke="#232323" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </a>
+                                <div th:if="${proprimas != null}">
+                                    <div th:each="proprima, iterStat : ${proprimas}" th:if="${detalle.id_proprima != null && detalle.id_proprima == proprima.id_proprima}" class="form-style rounded-2 p-2 mb-3 size-14 font-roboto rounded-3 w-100 d-flex justify-content-between align-items-center">
+                                        <div class="grid">
+                                            <p class="m-0 fw-semibold size-18" th:text="${proprima.nombre}"></p>
+                                            <span th:text="${proprima.tamano}"></span>
+                                            <input type="hidden" class="occult" th:value="${proprima.id_proprima}" readonly>
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-check-circle-fill mx-1" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div th:if="${proprimas != null}" th:each="proprima, iterStat : ${proprimas}">
+
                             </div>
 
                             <div class="d-flex align-items-end w-100 justify-content-end gap-2">

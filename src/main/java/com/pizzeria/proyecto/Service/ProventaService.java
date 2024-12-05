@@ -23,9 +23,9 @@ public class ProventaService extends ProventaRepository {
         return false;
     }
 
-    public Mono<Proventa> getProventa(String id) {
+    public Mono<Proventa> getProventaById(Integer id) {
         if (id != null) {
-            return get("productos-venta/id_proventa/"+id)
+            return get()
                     .flatMap(proventas ->
                             Mono.justOrEmpty(proventas.stream()
                                     .filter(proventa -> proventa.getId_proventa().equals(id))

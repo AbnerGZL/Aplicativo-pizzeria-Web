@@ -4,18 +4,18 @@ import lombok.Data;
 
 @Data
 public class Proprima {
-    private String id_proprima;
+    private Integer id_proprima;
     private String nombre;
-    private String precio;
+    private Double precio;
     private String tamano;
     private Integer stock;
-    private String id_categoria;
+    private Integer id_categoria;
 
-    public Proprima(String id_proprima, String nombre, String precio, String tamano, Integer stock, String id_categoria) {
+    public Proprima(Integer id_proprima, String nombre, Double precio, String tamaño, Integer stock, Integer id_categoria) {
         this.id_proprima = id_proprima;
         this.nombre = nombre;
         this.precio = precio;
-        this.tamano = tamano;
+        this.tamano = tamaño;
         this.stock = stock;
         this.id_categoria = id_categoria;
     }

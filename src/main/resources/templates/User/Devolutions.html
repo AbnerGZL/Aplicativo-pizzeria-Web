@@ -18,12 +18,50 @@
       <div th:replace="fragments/layout::section-bar"></div>
 
 
-      <div class="mx-3 col-11 col-sm-11 col-md-6 col-lg-6 col-xl-6 col-xxl-6 bg-pizza-gray rounded-3 px-3 box-orders">
-        <div>
-  <!--        <div class="p-2 bg-light w-100 rounded-3 my-3" style="height: 150px;"></div>-->
-  <!--        <div class="p-2 bg-light w-100 rounded-3 my-3" style="height: 150px;"></div>-->
-  <!--        <div class="p-2 bg-light w-100 rounded-3 my-3" style="height: 150px;"></div>-->
+      <div class="mx-3 col-11 col-sm-11 col-md-6 col-lg-6 col-xl-6 col-xxl-6 bg-pizza-gray rounded-3 box-orders d-flex flex-column align-items-center pt-2">
+
+        <div th:if="${#lists.isEmpty(pedidos)}">
+          <p class="text-center">Aún no hay pedidos devueltos</p>
         </div>
+        <div th:each="pedido : ${pedidos}" class="w-95 row mb-2 p-2 rounded-3" style="background-color:white;">
+          <div class="col-12 col-md-2 d-flex justify-content-center align-items-center mb-3 mb-md-0">
+            <i class="bi bi-check-square fs-1" style="color: #8EFF61"></i>
+          </div>
+          <div class="col-12 col-md-10">
+            <div class="row">
+              <div class="col-6 mb-2">
+                <p class="mb-0"><strong>Fecha pedido:</strong></p>
+                <p class="text-muted mb-0" th:text="${pedido.fecha_pedido}"></p>
+              </div>
+
+              <div class="col-6 mb-2">
+                <p class="mb-0"><strong>Fecha entrega:</strong></p>
+                <p class="text-muted mb-0" th:text="${pedido.fecha_entrega}"></p>
+              </div>
+
+              <div class="col-6 mb-2">
+                <p class="mb-0"><strong>Nombre referencia:</strong></p>
+                <p class="text-muted mb-0" th:text="${pedido.nombre_ref}"></p>
+              </div>
+
+              <div class="col-6 mb-2">
+                <p class="mb-0"><strong>Dirección:</strong></p>
+                <p class="text-muted mb-0" th:text="${pedido.direccion}"></p>
+              </div>
+            </div>
+            <div class="w-100 d-flex justify-content-end">
+              <button type="button" class="btn-effect-yellow bg-pizza-yellow fs-6 p-1 rounded-3"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modalDetalles"
+                      th:data-id_pedido="${pedido.id_pedido}"
+                      th:data-productos="${pedido.productos}"
+                      th:data-precio="${pedido.precio}">
+                Ver detalles
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

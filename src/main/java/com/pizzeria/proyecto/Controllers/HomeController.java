@@ -15,6 +15,7 @@ import reactor.core.publisher.Mono;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")
@@ -106,7 +107,18 @@ public class HomeController {
     }
 
     @GetMapping("car")
-    public String car(){
+    public String car(HttpSession session, Model model){
+        List<Carrito> carrito = carritoService.getCarritosByUserId(Integer.parseInt((String) session.getAttribute("id"))).block();
+
+        List<Proventa> proventa = new ArrayList<>();
+        for (Carrito car : carrito) {
+            Proventa block = proventaService.getProventaById(car.getId_proventa()).block();
+            proventa.add(block);
+        }
+
+        List<Paquete> paquete = paqueteService.get().block();
+
+
         return "Car";
     }
 
@@ -114,6 +126,7 @@ public class HomeController {
     public String selectorProductos(
             @RequestParam("product") String product,
             @RequestParam("type") String type,
+
             @RequestParam("id") String id,
             @RequestParam("title") String title,
             @RequestParam("price") String price,
@@ -154,17 +167,13 @@ public class HomeController {
     ) {
 
         List<RepertorioDetalle> detalles = repertorioDetalleService.getDetalles(id).block();
-        try {
-            String idProprima = detalles.getFirst().getId_proprima();
-            if (idProprima != null) {
-                Proprima proprima = proprimaService.getProprimaById(idProprima).block();
-                model.addAttribute("proprima", proprima);
-            } else{
-                model.addAttribute("rpdetalle", detalles);
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
+        List<Proprima> proprimas = proprimaService.get().block();
+
+        if(detalles == null || detalles.isEmpty()){
             model.addAttribute("error", "No es posible mostrar una selección para esta oferta");
+        }else {
+            model.addAttribute("proprimas", proprimas);
+            model.addAttribute("rpdetalle", detalles);
         }
         String[][] detallesCodificados = detalles.stream()
                 .map(detalle -> new String[]{
@@ -193,24 +202,39 @@ public class HomeController {
 
         if (idCliente != null && parametros.get("repertory") != null) {
             try{
-//                //Crear el nuevo registro producto venta
-//                Proventa proventa = new Proventa(null, parametros.get("id"),null,"carrito");
-//                proventaService.postProventa(proventa);
-//
-//                //Crear el nuevo registro carrito en base al producto venta ingresado
-//                String idproventa = Objects.requireNonNull(proventaService.getProventa(parametros.get("id")).block()).getId_proventa();
-//                Carrito carrito = new Carrito(null, null, idCliente,idproventa);
-//                carritoService.postCarrito(carrito);
-//
-//                //Crear los paquetes pertenecientes al producto venta ingresado
-//
-//                List<RepertorioDetalle> detalles = repertorioDetalleService.getDetalles(parametros.get("id")).block();
+                //Crear el nuevo registro producto venta
+                Proventa proventa = new Proventa(null, Integer.parseInt(parametros.get("repertory")),null,"carrito");
+                proventaService.postProventa(proventa);
+
+                List<RepertorioDetalle> ca = repertorioDetalleService.getDetalles(2).block();
+
+                //Crear el nuevo registro carrito en base al producto venta ingresado
+                Integer idproventa = Objects.requireNonNull(proventaService.getProventaById(Integer.parseInt(parametros.get("repertory"))).block()).getId_proventa();
+                Carrito carrito = new Carrito(null, null, Integer.parseInt(idCliente), idproventa);
+                carritoService.postCarrito(carrito);
+
+                //Crear los paquetes pertenecientes al producto venta ingresado
+                Map<Integer, Integer> conteoValores = new HashMap<>();
+
+                for (String valorStr : parametros.values()) {
+                    try {
+                        Integer valor = Integer.parseInt(valorStr);
+                        conteoValores.put(valor, conteoValores.getOrDefault(valor, 0) + 1);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Valor no válido (no se puede convertir a entero): " + valorStr);
+                    }
+                }
+
+                for (Map.Entry<Integer, Integer> entry : conteoValores.entrySet()) {
+                    Integer key = entry.getKey();
+                    Integer value = entry.getValue();
+
+                    Paquete paquete = new Paquete(null, idproventa, key, value);
+                    paqueteService.postPaquete(paquete);
+                }
 //                parametros.forEach((clave, valor) -> {
-//                    proprimaService.getProprima(valor,"");
 //                    System.out.println("Clave: " + clave + ", Valor: " + valor);
 //                });
-//                Paquete paquete = new Paquete(null,idproventa,null,null);
-//                paqueteService.postPaquete(paquete);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -223,7 +247,7 @@ public class HomeController {
                 .stream()
                 .map(entry ->
                         URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8) + "=" +
-                        URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8))
+                        URLEncoder.encode(entry.getValue().toString(), StandardCharsets.UTF_8))
                 .reduce((param1, param2) -> param1 + "&" + param2)
                 .orElse("");
 

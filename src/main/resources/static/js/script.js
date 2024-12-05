@@ -57,10 +57,9 @@ document.addEventListener("DOMContentLoaded", function() {
         // Iniciar un nuevo objeto en el localStorage tras presionar un boton seleccionar en repertory
         try {
             let blocks = document.getElementById("blocks-content").querySelectorAll('a');
-            const proventa = {};
             for (let i = 0; i < blocks.length; i++) {
                 blocks[i].addEventListener('click', function() {
-                    localStorage.setItem('objeto', JSON.stringify(proventa));
+                    localStorage.setItem('objeto', JSON.stringify({}));
                 })
             }
         }catch (e) {}
@@ -73,10 +72,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 parrafos[i].addEventListener('click', function(e) {
                     let objeto = JSON.parse(localStorage.getItem("objeto"));
                     if (objeto[`p-user-selection-${i+1}`] === undefined) {
+
                         objeto[`p-user-selection-${i+1}`] = "";
+                        objeto[`product-selected-${i+1}`] = "";
                         localStorage.setItem('objeto', JSON.stringify(objeto));
                     } else {
                         localStorage.setItem('nuevo', `p-user-selection-${i+1}`);
+                        localStorage.setItem('id', `product-selected-${i+1}`);
                     }
                 })
                 let parrafo = parrafos[i].querySelector('p');
@@ -97,10 +99,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
             for (let i=0; i < packages.length; i++){
-                let id = document.getElementById(`p-user-selection-${i+1}`).id;
-                if (objeto[id] != null && objeto[id] !== ""){
-                    document.getElementById(id).textContent = objeto[id];
-                    document.getElementById(`product-selected-${i+1}`).value = objeto[id];
+                if (objeto[`p-user-selection-${i+1}`] != null && objeto[`p-user-selection-${i+1}`] !== ""){
+                    document.getElementById(`p-user-selection-${i+1}`).textContent = objeto[`p-user-selection-${i+1}`];
+                    document.getElementById(`product-selected-${i+1}`).value = objeto[`product-selected-${i+1}`];
                     validations.push(true);
                 }
             }
@@ -125,14 +126,17 @@ function goBack() {
 try {
     const productsSelect = document.getElementById("select-products")
     for (let i = 1; i <= productsSelect.children.length; i++) {
+
         document.getElementById("select-"+i).addEventListener("click", function() {
             let objeto = JSON.parse(localStorage.getItem("objeto"));
-            let clave = Object.keys(objeto).find(key => objeto[key] === "");
-            if (clave === undefined){
+            let clave = Object.keys(objeto).filter(key => objeto[key] === "");
+            if (clave[0] === undefined && clave[1] === undefined) {
                 objeto[localStorage.getItem("nuevo").toString()] = document.getElementById("title-"+i).textContent;
+                objeto[localStorage.getItem("id").toString()] = this.querySelector('input').value;
                 localStorage.setItem('objeto',JSON.stringify(objeto));
             }else {
-                objeto[clave] = document.getElementById("title-"+i).textContent;
+                objeto[clave[0]] = document.getElementById("title-"+i).textContent;
+                objeto[clave[1]] = this.querySelector('input').value;
                 localStorage.setItem('objeto',JSON.stringify(objeto));
             }
         })

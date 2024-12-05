@@ -61,11 +61,11 @@
                                 <div class="card-description card-text size-14 mb-2" th:text="${producto.descripcion}"></div>
                                 <div class="form-style mb-2" th:id="${'type-'+iterStat.count}" th:text="${type}"></div>
 
-                                <div th:each="detalle : ${detalles}">
-                                    <div th:each="proprima : ${proprimas}" th:if="${proprima.tamano == type && proprima.nombre == producto.titulo.toLowerCase() || detalle.id_repertorio == producto.id_repertorio}">
-                                        <h5 th:text="${proprima.id_proprima}"></h5>
-                                        <a th:href="@{/selector(id=${id},title=${title},price=${price},img=${img},category=${category})}" class="btn btn-dark w-100 font-fredoka size-14" th:id="${'select-'+iterStat.count}">Seleccionar</a>
-                                    </div>
+                                <div th:each="detalle : ${detalles}" th:if="${detalle.id_repertorio == producto.id_repertorio && detalle.detalle == type}">
+                                        <a th:href="@{/selector(id=${id},title=${title},price=${price},img=${img},category=${category})}" class="btn btn-dark w-100 font-fredoka size-14" th:id="${'select-'+iterStat.count}">
+                                        <input type="hidden" th:value="${detalle.id_proprima}">
+                                            Seleccionar
+                                        </a>
                                 </div>
 
 <!--                                <form th:action="@{/selector_products()}" method="POST">-->

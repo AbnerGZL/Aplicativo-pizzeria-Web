@@ -37,9 +37,9 @@ public class ProventaRepository {
         }
     }
 
-    public Mono<List<Proventa>> get(String uri) {
+    public Mono<List<Proventa>> get() {
         return webClient.get()
-                .uri(uri)
+                .uri("productos-venta")
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Proventa>>() {});
     }
