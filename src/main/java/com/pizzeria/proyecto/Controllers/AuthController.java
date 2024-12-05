@@ -56,7 +56,7 @@ public class AuthController {
                     model.addAttribute("redirect",redirect);
                     model.addAttribute("content",content);
                 }
-                return "Login";
+                return "login";
             }
         } else {
             model.addAttribute("error", "Fallo en el ingreso de datos");
@@ -66,7 +66,7 @@ public class AuthController {
                 model.addAttribute("redirect",redirect);
                 model.addAttribute("content",content);
             }
-            return "Login";
+            return "login";
         }
     }
 
