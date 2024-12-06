@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     if (document.getElementById("input-number-"+i).value <= 4){
                         document.getElementById("input-number-"+i).value = parseInt(document.getElementById("input-number-"+i).value)+1
 
-                        let price = parseFloat(document.getElementById("proventa-price-"+i).value)*parseFloat(document.getElementById("input-number-"+i).value);
+                        let price = parseFloat(document.getElementById("static-price-"+i).value)*parseFloat(document.getElementById("input-number-"+i).value);
 
                         document.getElementById("title-price-"+i).textContent ='s/.'+price.toFixed(2);
                         document.getElementById("proventa-price-"+i).value = price;
