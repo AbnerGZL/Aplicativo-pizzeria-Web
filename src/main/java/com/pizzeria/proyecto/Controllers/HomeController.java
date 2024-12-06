@@ -7,9 +7,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
 import java.net.URLEncoder;
@@ -296,5 +306,43 @@ public class HomeController {
         model.addAttribute("redirect", "selection");
         model.addAttribute("content", encodedcontent);
         return "login";
+    }
+
+    @GetMapping("recovery")
+    public String recovery(Model model){
+        model.addAttribute("recovery","http://elote.pythonanywhere.com/recovery/request/");
+        return "recovery";
+    }
+
+    @PostMapping("recovery")
+    public String recoveryPassword(@RequestParam("correo") String correo, Model model){
+        RestTemplate restTemplate = new RestTemplate();
+
+        String url = "http://elote.pythonanywhere.com/recovery/request/";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Token c6cf9d5275f5c1209ed66231d04e0a5cc17d8560");
+
+        Map<String, String> requestBody = Map.of("correo", correo);
+
+        try {
+        HttpEntity<Map<String, String>> entity = new HttpEntity<>(requestBody, headers);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+
+            if (response.getStatusCode().is2xxSuccessful()) {
+                System.out.println("Solicitud enviada con éxito: " + response.getBody());
+                return "login";
+            } else {
+                System.out.println("Error al enviar la solicitud: " + response.getStatusCode());
+                model.addAttribute("error","error al enviar correo");
+                return "recovery";
+            }
+
+        } catch (RestClientException e) {
+            model.addAttribute("error",e.getMessage());
+            return "recovery";
+        }
+
+
     }
 }
