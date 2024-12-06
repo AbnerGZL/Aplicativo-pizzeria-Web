@@ -17,9 +17,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
         //Borrar variables del navegador al recargar la página a través del logo
         try {
-            document.getElementById("home").removeEventListener("click", function() {
+            document.getElementById("home").addEventListener("click", function() {
                 localStorage.clear();
             })
+        }catch (e) {}
+        try {
+        document.getElementById("back").addEventListener("click", function() {localStorage.clear();})
+    }catch (e) {}
+        try {
+            document.getElementById("add-to-car").addEventListener("click", function() {localStorage.clear();})
         }catch (e) {}
 
         //Bloquar entrada input en selector
@@ -48,11 +54,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 changeDetails()
             })
         } catch (e) {}
-
-        // Borrar todas las variables del navegador
-        try {
-            document.getElementById("back").addEventListener("click", function() {localStorage.clear();})
-        }catch (e){}
 
         // Iniciar un nuevo objeto en el localStorage tras presionar un boton seleccionar en repertory
         try {
@@ -115,6 +116,72 @@ document.addEventListener("DOMContentLoaded", function() {
                 btnAdd.classList.add("btn-pizza-yellow");
             }
 
+        }catch(e){}
+
+        //Bloquear entrada de inputs en carrito-resumen, asignarles id y Sumar o quitar producto en carrito
+        try {
+            let carts = document.getElementById("carts");
+
+            let inputs = document.getElementById("carrito").querySelectorAll("input");
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].addEventListener('keydown', function(e) {
+                    e.preventDefault();
+                });
+            }
+            for (let i = 1; i <= carts.children.length; i++) {
+                document.getElementById("btn-minus-"+i).addEventListener("click", function quitar() {
+                    if (document.getElementById("input-number-"+i).value > 1){
+                        document.getElementById("input-number-"+i).value = parseInt(document.getElementById("input-number-"+i).value)-1
+
+                        let price = parseFloat(document.getElementById("static-price-"+i).value)*parseFloat(document.getElementById("input-number-"+i).value);
+                        document.getElementById("title-price-"+i).textContent ='s/.'+price.toFixed(2);
+                        document.getElementById("proventa-price-"+i).value =price;
+                    }
+
+                });
+                document.getElementById("btn-plus-"+i).addEventListener("click", function agregar() {
+                    if (document.getElementById("input-number-"+i).value <= 4){
+                        document.getElementById("input-number-"+i).value = parseInt(document.getElementById("input-number-"+i).value)+1
+
+                        let price = parseFloat(document.getElementById("proventa-price-"+i).value)*parseFloat(document.getElementById("input-number-"+i).value);
+
+                        document.getElementById("title-price-"+i).textContent ='s/.'+price.toFixed(2);
+                        document.getElementById("proventa-price-"+i).value = price;
+
+                    }
+
+                });
+            }
+        }catch (e) {console.log(e)}
+
+        //Sumar precios en carrito
+        try {
+            document.getElementById("metodo-pago").addEventListener("change",function (){
+                document.getElementById("seleccion-nula").remove();
+
+                let submit = document.getElementById("submit-order");
+                submit.type = "submit"
+                submit.classList.remove("btn-disabled");
+                submit.classList.add("btn-effect-dark");
+                let carts = document.getElementById("carts");
+                for (let i=1; i<=carts.children.length; i++) {
+                    let boton1 = document.getElementById("btn-plus-"+i);
+                    let botonClon1 = boton1.cloneNode(true);
+                    boton1.parentNode.replaceChild(botonClon1, boton1);
+
+                    let boton2 = document.getElementById("btn-minus-"+i);
+                    let botonClon2 = boton2.cloneNode(true);
+                    boton2.parentNode.replaceChild(botonClon2, boton2);
+                }
+
+                let prices = document.getElementById("summary").querySelectorAll("input");
+                let price = 0
+                for (let i = 0; i < prices.length-1; i++) {
+                    price = price+parseFloat(prices[i].value);
+                }
+                document.getElementById("total").value = price.toFixed(2);
+                document.getElementById("final-price").textContent = "s/."+price.toFixed(2);
+            })
         }catch(e){}
 });
 //Botón volver

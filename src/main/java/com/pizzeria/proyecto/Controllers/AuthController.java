@@ -142,7 +142,7 @@ public class AuthController {
                     model.addAttribute("redirect",redirect);
                     model.addAttribute("content",content);
                 }
-                return "Register";
+                return "register";
             }
 
         } else {
@@ -155,7 +155,7 @@ public class AuthController {
                 model.addAttribute("redirect",redirect);
                 model.addAttribute("content",content);
             }
-            return "Register";
+            return "register";
         }
     }
 }

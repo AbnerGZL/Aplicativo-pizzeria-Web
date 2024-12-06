@@ -8,9 +8,9 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-    <div th:replace="fragments/layout::pageloader"></div>
-    <div th:replace="fragments/layout::navbar"></div>
-    <div th:replace="fragments/layout::header-categories"></div>
+    <div th:replace="~{fragments/layout::pageloader}"></div>
+    <div th:replace="~{fragments/layout::navbar}"></div>
+    <div th:replace="~{fragments/layout::header-categories}"></div>
     <main>
 <!--        <div>-->
 <!--            <button onclick="goBack()" class="d-flex justify-content-center align-items-center p-2 font-fredoka fw-semibold size-14 my-2">-->
@@ -25,7 +25,7 @@
         <div class="submain">
             <!-- Section bar del usuario  -->
             <div class="d-flex flex-wrap justify-content-center mx-auto my-3 my-sm-3 my-md-5 my-lg-5 my-xl-5 my-xxl-5">
-                <div th:replace="fragments/layout::section-bar"></div>
+                <div th:replace="~{fragments/layout::section-bar}"></div>
                     <div class="mx-3 col-11 col-sm-11 col-md-6 col-lg-6 col-xl-6 col-xxl-6" id="view-profile">
                         <h5>Mi información</h5><hr>
                         <div class="grid w-100 rounded-3 font-roboto">
@@ -98,7 +98,7 @@
         </div>
         </div>
     </main>
-    <div th:replace="fragments/layout::footer"></div>
+    <div th:replace="~{fragments/layout::footer}"></div>
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/script.js}"></script>
 </body>

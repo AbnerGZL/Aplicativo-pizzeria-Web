@@ -29,16 +29,4 @@ public class GlobalController {
 
         model.addAttribute("sessionAttributes", sessionAttributes);
     }
-//
-//    @ModelAttribute("username")
-//    public String getUsername(HttpSession session) {
-//        // Obtiene el nombre del usuario desde la sesión
-//        return (String) session.getAttribute("username");
-//    }
-//
-//    @ModelAttribute("contrasena")
-//    public String getContrasena(HttpSession session) {
-//        // Obtiene el nombre del usuario desde la sesión
-//        return (String) session.getAttribute("contrasena");
-//    }
 }

@@ -1,26 +1,24 @@
 package com.pizzeria.proyecto.Repositories;
 
 import com.pizzeria.proyecto.Models.Carrito;
-import com.pizzeria.proyecto.Models.Pedido;
+import com.pizzeria.proyecto.Models.Pago;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-import reactor.core.publisher.Mono;
-
-import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class PedidoRepository {
+public class PagoRepository {
+
     private final WebClient webClient;
-    public boolean post(Pedido pedido) {
+
+    public boolean post(Pago pago) {
         try {
             HttpStatus status = (HttpStatus) webClient.post()
-                    .uri("pedidos")
-                    .bodyValue(pedido)
+                    .uri("pagos")
+                    .bodyValue(pago)
                     .retrieve()
                     .toBodilessEntity()
                     .block()
@@ -36,10 +34,4 @@ public class PedidoRepository {
         }
     }
 
-    public Mono<List<Pedido>> get() {
-        return webClient.get()
-                .uri("pedidos")
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<Pedido>>() {});
-    }
 }

@@ -26,22 +26,22 @@ public class UserController {
 
     @GetMapping
     public String details(Model model) {
-        return "User/Details";
+        return "user/details";
     }
 
     @GetMapping("/history")
     public String history() {
-        return "User/History";
+        return "user/history";
     }
 
     @GetMapping("/active")
     public String active() {
-        return "User/Actives";
+        return "user/actives";
     }
 
     @GetMapping("/devolutions")
     public String devolutions() {
-        return "User/Devolutions";
+        return "user/devolutions";
     }
 
     @PostMapping("/edit")
@@ -62,31 +62,6 @@ public class UserController {
         }
         model.addAttribute("error", "Hubo un error al procesar sus datos");
         return "redirect:/user";
-    }
-
-
-    private Mono<String> manejarPedidosPorEstado(String estado, String atributoModelo, String vista, Model model, HttpSession session) {
-        Integer idCliente = Integer.valueOf(session.getAttribute("id") + "");
-        return pedidoService.obtenerPedidosPorEstado(estado, idCliente)
-                .flatMapMany(Flux::fromIterable)
-                .flatMap(pedido -> {
-                    Integer idPedido = Integer.valueOf(pedido.getId_pedido());
-                    Mono<List<String>> productosMono = pedidoService.obtenerProductosDePedido(idPedido);
-                    Mono<Double> precioMono = pedidoService.obtenerPrecioPedido(idPedido);
-                    return Mono.zip(productosMono, precioMono)
-                            .map(tuple -> {
-                                List<String> productos = tuple.getT1();
-                                Double precio = tuple.getT2();
-                                pedido.setProductos(productos);
-                                pedido.setPrecio(precio);
-                                return pedido;
-                            });
-                })
-                .collectList()
-                .map(pedidos -> {
-                    model.addAttribute(atributoModelo, pedidos);
-                    return vista;
-                });
     }
 
 }

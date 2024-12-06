@@ -567,8 +567,9 @@ img {
 }
 .car-block {
     overflow: hidden;
-    overflow-y: scroll;
-    max-height: 500px;
+    overflow-y: auto;
+    height: 500px;
+    box-sizing: border-box;
 }
 .btn-outline-danger {
     border-color: var(--color-red);
@@ -835,11 +836,41 @@ footer div ul li a:hover {
     width: 100%;
     height: 100%;
 }
+.cart-list {
+    display: flex;
+    height: 180px;
+}
 
-/*.card-body-selector img {*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*}*/
+.card-img-list {
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.card-img-list img {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    width: 100%;
+    height: 100%;
+}
+.input-none-style{
+    text-align: center;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    width: 100%;
+    border-radius: 12px;
+}
+.summary {
+    display: grid;
+}
+.summary li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0px;
+}
 
 /*Media Query*/
 @media screen and (max-width: 1187px){
@@ -913,6 +944,9 @@ footer div ul li a:hover {
 @media screen and (max-width: 457px) {
     .banner-footer {
         display: none !important;
+    }
+    .card-img-list {
+        display: none;
     }
 }
 @media screen and (max-width: 991px) {

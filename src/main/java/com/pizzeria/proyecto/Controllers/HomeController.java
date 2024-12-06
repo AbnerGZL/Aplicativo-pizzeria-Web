@@ -15,7 +15,6 @@ import reactor.core.publisher.Mono;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")
@@ -50,7 +49,7 @@ public class HomeController {
         model.addAttribute("pizzas", repertoriosPizzas);
         model.addAttribute("ofertas", repertoriosOfertas);
         model.addAttribute("locate", locate);
-        return "Home";
+        return "home";
 
     }
 
@@ -80,7 +79,7 @@ public class HomeController {
         model.addAttribute("repertorios", repertorios);
         model.addAttribute("category", categoria);
 
-        return "Repertory";
+        return "repertory";
     }
 
     @PostMapping("locate")
@@ -92,6 +91,7 @@ public class HomeController {
 
                 Cookie locateCookie = new Cookie("locate", encodedLocate);
                 locateCookie.setHttpOnly(true);
+                locateCookie.setSecure(true);
                 locateCookie.setMaxAge(7 * 24 * 60 * 60);
 
                 response.addCookie(locateCookie);
@@ -107,19 +107,52 @@ public class HomeController {
     }
 
     @GetMapping("car")
-    public String car(HttpSession session, Model model){
-        List<Carrito> carrito = carritoService.getCarritosByUserId(Integer.parseInt((String) session.getAttribute("id"))).block();
-
-        List<Proventa> proventa = new ArrayList<>();
-        for (Carrito car : carrito) {
-            Proventa block = proventaService.getProventaById(car.getId_proventa()).block();
-            proventa.add(block);
+    public String car(HttpSession session, Model model, HttpServletRequest request){
+        String locate = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("locate".equals(cookie.getName()) && cookie.getValue() != null) {
+                    locate = (new String(Base64.getUrlDecoder().decode(cookie.getValue()), StandardCharsets.UTF_8)).trim().replace("%20"," ");
+                    break;
+                }
+            }
         }
+        try {
 
-        List<Paquete> paquete = paqueteService.get().block();
+            List<Carrito> carritos = carritoService.getCarritosByUserId(Integer.parseInt((String) session.getAttribute("id"))).block();
 
+            List<Proventa> proventas = new ArrayList<>();
+            for (Carrito car : carritos) {
+                Proventa block = proventaService.getProventaById(car.getId_proventa())
+                        .filter(proventa -> Objects.equals(proventa.getEstado(),"carrito"))
+                        .block();
+                proventas.add(block);
+            }
 
-        return "Car";
+            List<Repertorio> repertorios = new ArrayList<>();
+            for (Proventa pro : proventas) {
+                Repertorio block = repertorioService.getRepertorioById(pro.getId_repertorio())
+                        .block();
+                repertorios.add(block);
+            }
+
+            List<Paquete> paquetes = paqueteService.get().block();
+
+            List<Proprima> proprimas = proprimaService.get().block();
+
+            model.addAttribute("locate",locate);
+            model.addAttribute("repertorios",repertorios);
+            model.addAttribute("proprimas",proprimas);
+            model.addAttribute("carritos",carritos);
+            model.addAttribute("proventas",proventas);
+            model.addAttribute("paquetes",paquetes);
+            return "car";
+
+        } catch (Exception e) {
+            model.addAttribute("error","error al cargar los productos");
+            return "car";
+        }
     }
 
     @GetMapping("selector_products")
@@ -151,7 +184,7 @@ public class HomeController {
         model.addAttribute("img",img);
         model.addAttribute("category",category);
 
-        return "Selector-productos";
+        return "selector-productos";
     }
 
 
@@ -189,39 +222,44 @@ public class HomeController {
         model.addAttribute("price", price);
         model.addAttribute("img", img);
         model.addAttribute("category", category);
-        return "Selector";
+        return "selector";
     }
 
     @GetMapping("selection")
     public String proventaSelect(@RequestParam Map<String, String> parametros, HttpSession sesion, Model model){
         String idCliente = (String) sesion.getAttribute("id");
-            parametros.forEach((clave, valor) -> {
-                System.out.println("Clave: " + clave + ", Valor: " + valor);
-            });
-
+//            parametros.forEach((clave, valor) -> {
+//                System.out.println("Clave: " + clave + ", Valor: " + valor);
+//            });
 
         if (idCliente != null && parametros.get("repertory") != null) {
             try{
+                String codigo = UUID.randomUUID().toString().substring(0,15);
                 //Crear el nuevo registro producto venta
-                Proventa proventa = new Proventa(null, Integer.parseInt(parametros.get("repertory")),null,"carrito");
+                Proventa proventa = new Proventa(null, Integer.parseInt(parametros.get("repertory")),null, codigo,"carrito");
                 proventaService.postProventa(proventa);
 
-                List<RepertorioDetalle> ca = repertorioDetalleService.getDetalles(2).block();
-
                 //Crear el nuevo registro carrito en base al producto venta ingresado
-                Integer idproventa = Objects.requireNonNull(proventaService.getProventaById(Integer.parseInt(parametros.get("repertory"))).block()).getId_proventa();
+                Integer idproventa = Objects.requireNonNull(proventaService.getProventaByCode(Integer.parseInt(parametros.get("repertory")),codigo).block()).getId_proventa();
                 Carrito carrito = new Carrito(null, null, Integer.parseInt(idCliente), idproventa);
+
                 carritoService.postCarrito(carrito);
 
                 //Crear los paquetes pertenecientes al producto venta ingresado
                 Map<Integer, Integer> conteoValores = new HashMap<>();
 
-                for (String valorStr : parametros.values()) {
-                    try {
-                        Integer valor = Integer.parseInt(valorStr);
-                        conteoValores.put(valor, conteoValores.getOrDefault(valor, 0) + 1);
-                    } catch (NumberFormatException e) {
-                        System.out.println("Valor no válido (no se puede convertir a entero): " + valorStr);
+                for (Map.Entry<String, String> entry : parametros.entrySet()) {
+                    String clave = entry.getKey();
+                    String valorStr = entry.getValue();
+
+                    // Verificar si la clave comienza con "product-selected-"
+                    if (clave.startsWith("product-selected-")) {
+                        try {
+                            Integer valor = Integer.parseInt(valorStr);
+                            conteoValores.put(valor, conteoValores.getOrDefault(valor, 0) + 1);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Valor no válido (no se puede convertir a entero): " + valorStr);
+                        }
                     }
                 }
 
@@ -230,6 +268,7 @@ public class HomeController {
                     Integer value = entry.getValue();
 
                     Paquete paquete = new Paquete(null, idproventa, key, value);
+//                    System.out.println("Clave: " + key + ", Valor: " + value);
                     paqueteService.postPaquete(paquete);
                 }
 //                parametros.forEach((clave, valor) -> {

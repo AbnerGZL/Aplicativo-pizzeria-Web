@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <!--Pantalla de carga-->
+    <div th:replace="~{fragments/layout::pageloader}"></div>
+    <div th:replace="~{fragments/layout::navbar}"></div>
+    <div th:replace="~{fragments/layout::header-categories}"></div>
+<form th:action="@{/sendorder}" method="POST">
+    <main>
+        <div class="submain">
+            <div class="w-100 d-flex justify-content-end align-items-center p-2">
+                <a th:href="@{/oferts}" class="btn-pizza-red rounded-5 px-3 font-fredoka fw-semibold size-14">Seguir comprando</a>
+            </div>
+            <div class="d-flex flex-wrap align-items-start p-2" id="carrito">
+                <div class="grid my-2 px-3 col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                    <div class="d-flex align-items-center mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                        </svg>  
+                        <h2 class="mx-2">Carrito</h2>
+                    </div>
+                    <div class="grid car-block w-100 rounded-4 bg-pizza-gray px-3 block-cart" id="carts">
+                        <div th:each="carrito, iterStat : ${carritos}">
+                            <div th:each="proventa : ${proventas}" th:if="${carrito.id_proventa == proventa.id_proventa}">
+                                <div th:each="repertorio : ${repertorios}" th:if="${proventa.id_repertorio == repertorio.id_repertorio}" class="bg-light w-100 rounded-3 my-3 cart-list">
+                                    <div class="card-img-list col-4">
+                                        <img th:src="@{${repertorio.imagen}}">
+                                    </div>
+                                    <div class="d-grid w-100 p-2">
+                                        <div class="d-flex justify-content-between col-12 align-items-center">
+                                            <div class="col-7">
+                                                <h5 class="" th:text="${repertorio.titulo}"></h5>
+                                                <input type="hidden" th:id="${'static-price-'+iterStat.count}" th:value="${repertorio.precio}">
+                                                <input type="hidden" th:name="${'proventa-'+iterStat.count}" th:value="${proventa.id_proventa}">
+                                            </div>
+                                            <div class="d-flex col-4 justify-content-center align-items-center" th:id="${'actions-'+iterStat.count}">
+                                                <a href="" class="d-flex rounded-3 size-20 p-1 align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#D03139" class="bi bi-trash3" viewBox="0 0 16 16">
+                                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                                                    </svg>
+                                                </a>
+                                                <button type="button" class="d-flex rounded-3 size-20 hover-gray p-1 align-items-center" th:id="${'btn-minus-'+iterStat.count}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
+                                                    </svg>
+                                                </button>
+                                                <input type="number" class="input-none-style cursor-null" min="0" value="1" readonly th:id="${'input-number-'+iterStat.count}">
+                                                <button type="button" class="d-flex rounded-3 size-20 hover-gray p-1 align-items-center" th:id="${'btn-plus-'+iterStat.count}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-wrap col-8 h-100 overflow-hidden justify-content-between gap-2">
+                                            <div th:each="paquete : ${paquetes}" th:if="${paquete.id_proventa == proventa.id_proventa}" class="p-1">
+                                                <div th:each="proprima : ${proprimas}" th:if="${proprima.id_proprima == paquete.id_proprima}">
+                                                    <div th:each="i : ${#numbers.sequence(1, paquete.cantidad)}">
+                                                        <div class="d-grid align-items-center">
+                                                            <strong><p th:text="${proprima.nombre.toUpperCase()}" class="size-14 m-0"></p></strong>
+                                                            <span th:text="${proprima.tamano}" class="size-12"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="grid my-2 px-2 col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                    <div class="d-flex align-items-center">
+                        <h2 class="mx-2">Resumen</h2>
+                    </div>
+                    <div class="grid mx-2 mt-3" id="summary">
+                        <ul class="summary">
+                            <div th:each="carrito, iterStat : ${carritos}">
+                                <div th:each="proventa : ${proventas}" th:if="${carrito.id_proventa == proventa.id_proventa}">
+                                    <div th:each="repertorio : ${repertorios}" th:if="${proventa.id_repertorio == repertorio.id_repertorio}">
+                                        <li>
+                                            <div th:text="${repertorio.titulo}"></div>
+                                            <div th:text="${'s/.'+repertorio.precio}" th:id="${'title-price-'+iterStat.count}"></div>
+                                            <input type="hidden" th:id="${'proventa-price-'+iterStat.count}" th:name="${'proventa-price-'+iterStat.count}" th:value="${repertorio.precio}">
+                                        </li>
+                                    </div>
+                                </div>
+                            </div>
+                            <li class="mb-2">
+                                <h5>Entrega</h5>
+                                <h5>s/.5.00</h5>
+                                <input type="hidden" id="addition" name="addition" value="5">
+                            </li>
+                            <li class="border-top">
+                                <h4 class="mt-2">Total</h4>
+                                <h5 id="final-price"></h5>
+                                <input type="hidden" id="total" name="total">
+                            </li>
+                        </ul>
+                        <h5 class="mt-4">Método de pago:</h5>
+                        <select class="form-style my-2" id="metodo-pago" name="metodo-pago">
+                            <option id="seleccion-nula">-- Seleccionar --</option>
+                            <option value="efectivo">Efectivo</option>
+                        </select>
+                        <div class="d-grid mt-4">
+                            <div class="d-flex align-items-center">
+                                <img th:src="@{/images/geo.svg}" width="20px" style="filter:invert(100%)">
+                                <h5 class="mx-1">Dirección de envío:</h5>
+                            </div>
+                            <div th:if="${locate != null}" class="rounded-5-sm py-3 px-1 font-roboto fw-semibold size-14" th:text="${locate}"></div>
+                            <div th:if="${locate == null}" class="d-grid text-center">
+                                <p>No se ha proporcionado una ubicación,</p>
+                                <p>ingrese una antes de proceder al pedido</p>
+                            </div>
+                        </div>
+                        <button th:if="${locate != null}" id="submit-order" type="button" class="d-flex justify-content-center align-items-center text-light rounded-4 bg-pizza-dark btn-disabled w-100 p-2 my-3">Realizar pedido</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</form>
+    <div th:replace="~{fragments/layout::footer}"></div>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>

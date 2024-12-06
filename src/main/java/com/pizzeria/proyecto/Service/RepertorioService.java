@@ -1,39 +1,29 @@
 package com.pizzeria.proyecto.Service;
 
 import com.pizzeria.proyecto.Models.Repertorio;
+import com.pizzeria.proyecto.Repositories.RepertorioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Objects;
 
 @Service
-public class RepertorioService {
-
-    private final WebClient webClient;
+public class RepertorioService extends RepertorioRepository {
 
     public RepertorioService(WebClient webClient) {
-        this.webClient = webClient;
+        super(webClient);
     }
 
-    public Mono<List<Repertorio>> obtenerRepertorios(String filtro) {
-        Mono<List<Repertorio>> repertor = null;
-        try {
-            repertor = webClient.get()
-                    .uri("/repertorios")
-                    .retrieve()
-                    .bodyToMono(Repertorio[].class)
-                    .map(Arrays::asList)
-                    .map(repertorios -> repertorios.stream()
-                            .filter(repertorio -> repertorio.getTipo_repertorio().equalsIgnoreCase(filtro))
-//                            .limit(cantidad)
-                            .toList());
-
-            return repertor;
-
-        } catch (Exception e){
-            System.out.println(e.getMessage());
+    public Mono<Repertorio> getRepertorioById(Integer id) {
+        if (id != null) {
+            return get()
+                    .flatMap(repertorios ->
+                            Mono.justOrEmpty(repertorios.stream()
+                                    .filter(repertorio -> Objects.equals(repertorio.getId_repertorio(),id))
+                                    .findFirst()
+                            ));
+        } else {
             return Mono.empty();
         }
     }
