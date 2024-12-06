@@ -17,5 +17,4 @@ public class Proventa {
         this.codigo = codigo;
         this.estado = estado;
     }
-    public Proventa() {}
 }

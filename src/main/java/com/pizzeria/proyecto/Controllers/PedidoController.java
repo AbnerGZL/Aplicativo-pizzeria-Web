@@ -62,7 +62,7 @@ public class PedidoController {
 
             //Generar nuevo pedido
             Pedido pedido = new Pedido(null, 1, Integer.parseInt(idCliente), dateTimeString, dateOrderString, "pedido", codigo, locate);
-//            pedidoService.postPedido(pedido);
+            pedidoService.postPedido(pedido);
             //Obtener ide del nuevo pedido
             Integer idPedido = pedidoService.getPedidoByCodigo(codigo).block().getId_pedido();
 
@@ -93,7 +93,7 @@ public class PedidoController {
                 String priceKey = "proventa-price-" + sufijo;
 
                 if (valores.containsKey(proventaKey) && valores.containsKey(priceKey)) {
-                    int proventa = Integer.parseInt(valores.get(proventaKey));
+                    Integer proventa = Integer.parseInt(valores.get(proventaKey));
                     double precio = Double.parseDouble(valores.get(priceKey));
 
                     double subtotal = precio;
@@ -104,19 +104,17 @@ public class PedidoController {
 
                     // Crear el objeto DetallePedido
                     DetallePedido detalle = new DetallePedido(null, subtotal, idPedido, proventa);
-//                    detallePedidoService.postDetalle(detalle);
+                    detallePedidoService.postDetalle(detalle);
 
                     //Editar el estado de los productos venta
-                    Proventa prove = new Proventa();
-                    System.out.println(proventa);
-                    prove.setId_proventa(proventa);
+                    Proventa prove = proventaService.getProventaById(proventa).block();
                     prove.setEstado("pedido");
-//                    proventaService.putProventa(prove);
+                    proventaService.putProventa(prove);
                 }
-            }
 
+            }
             Pago pago = new Pago(null, Double.parseDouble(parametros.get("total")), parametros.get("metodo-pago"), "deuda", idPedido);
-//            pagoService.postPago(pago);
+            pagoService.postPago(pago);
 
             return "redirect:/";
         }
